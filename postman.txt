@@ -1,4 +1,0 @@
-GET /sapi/rest/api/region-stat?region=5000000000000&amp; cardNumbers=111008618,111023318,111023918,111024918,114008818,114009518,114009918,114010018,121011717&amp; startDate=2019.01.01&amp; endDate=2019.05.31 HTTP/1.1
-Host: localhost:8082
-cache-control: no-cache
-Postman-Token: ed864514-8728-4d31-88bc-57779a5b3f4a

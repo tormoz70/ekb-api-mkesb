@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "dfa447cb-a088-4f2c-86d8-dac57e5f11b8",
+		"name": "mkesb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mkesb region-stat GET",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "18a04514-218e-4994-bc2f-ba6ce4fa2128",
+						"exec": [
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost\");",
+							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://mkesb.sapi.fond-kino.ru\"); //prod"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{mkesbsrv}}:8083/sapi/rest/api/region-stat?region=5000000000000&startDate=2019.01.01&endDate=2019.03.31",
+					"host": [
+						"{{mkesbsrv}}"
+					],
+					"port": "8083",
+					"path": [
+						"sapi",
+						"rest",
+						"api",
+						"region-stat"
+					],
+					"query": [
+						{
+							"key": "region",
+							"value": "5000000000000"
+						},
+						{
+							"key": "cardNumbers",
+							"value": "111008618,111023318,111023918,111024918,114008818,114009518,114009918,114010018,121011717",
+							"disabled": true
+						},
+						{
+							"key": "startDate",
+							"value": "2019.01.01"
+						},
+						{
+							"key": "endDate",
+							"value": "2019.03.31"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mkesb region-stat POST",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "18a04514-218e-4994-bc2f-ba6ce4fa2128",
+						"exec": [
+							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost\");",
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://mkesb.sapi.fond-kino.ru\"); //prod"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"region\":\t\t\"7700000000000\",\n        \"startDate\":\t\"2018.10.01\",\n        \"endDate\":\t\t\"2018.12.31\"\n}"
+				},
+				"url": {
+					"raw": "{{mkesbsrv}}:8083/sapi/rest/api/region-stat?",
+					"host": [
+						"{{mkesbsrv}}"
+					],
+					"port": "8083",
+					"path": [
+						"sapi",
+						"rest",
+						"api",
+						"region-stat"
+					],
+					"query": [
+						{
+							"key": "cardNumbers",
+							"value": "111008618,111023318,111023918,111024918,114008818,114009518,114009918,114010018,121011717",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
