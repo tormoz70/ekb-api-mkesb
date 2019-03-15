@@ -1,0 +1,3 @@
+[submodule "bio4j-distribution"]
+	path = bio4j-distribution
+	url = http://192.168.70.200/bio4j-ng/bio4j-distribution.git
