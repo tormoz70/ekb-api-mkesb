@@ -1,0 +1,26 @@
+[Unit]
+Description=ekb-mkesb
+After=network-online.target syslog.target
+
+[Service]
+SyslogIdentifier=ekb-mkesb
+Type=simple
+#Type=forking
+#User=root
+#Group=root
+PIDFile=/var/run/ekb-mkesb.pid
+WorkingDirectory=/www/ekb-as
+ExecStart=/www/java/jdk1.8.0_181/bin/java \
+    -server \
+    -XX:-UseParallelGC \
+    -Xms512M -Xmx2G \
+    -Dcom.sun.management.jmxremote.port=1100 \
+    -Dcom.sun.management.jmxremote.authenticate=false \
+    -Dcom.sun.management.jmxremote.ssl=false \
+    -Dgosh.args=--noi \
+    -Duser.timezone=GMT+3 \
+    -jar bin/felix.jar 2>&1 > felix.out 
+TimeoutSec=300
+TimeoutStopSec=20
+Restart=on-failure
+RestartSec=10

@@ -79,7 +79,7 @@
         <bio-debug>false</bio-debug>
 
         <bio-error-handler>json</bio-error-handler>
-        <jetty-http-port>8082</jetty-http-port>
+        <jetty-http-port>8083</jetty-http-port>
         <remote-debugger-port>9092</remote-debugger-port>
         <jmx-port>1103</jmx-port>
 		
