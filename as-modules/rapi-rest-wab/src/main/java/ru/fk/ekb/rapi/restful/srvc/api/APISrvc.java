@@ -1,5 +1,7 @@
 package ru.fk.ekb.rapi.restful.srvc.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.commons.converter.Converter;
 import ru.bio4j.ng.commons.utils.Jsons;
 import ru.bio4j.ng.commons.utils.Strings;
@@ -13,10 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.List;
 
 import ru.bio4j.ng.service.types.BioQueryParams;
@@ -33,27 +31,18 @@ public class APISrvc extends RestSrvcBase {
         return puQties;
     }
 
-    public void ReadStreamToStr(InputStream inputStream, String encoding, String json) throws Exception {
-        StringBuffer stringBuffer = new StringBuffer();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, encoding));
-        String buffer = null;
-        while ((buffer = bufferedReader.readLine()) != null){
-            stringBuffer.append(buffer);
-        }
-        json = stringBuffer.toString();
-    }
-
     @POST
     @Path("/region-stat")
     @Produces(MediaType.APPLICATION_JSON)
     public  List<PuQty> region_stat_post(@Context HttpServletRequest request) throws Exception {
+        Logger LOG = LoggerFactory.getLogger(RestSrvcBase.class);
         RequestRegionStat requestRegionStat = null;
         BioQueryParams queryParams = ((BioWrappedRequest)request).getBioQueryParams();
         if(!Strings.isNullOrEmpty(queryParams.jsonData)) {
             try {
                 requestRegionStat = Jsons.decode(queryParams.jsonData, RequestRegionStat.class);
             } catch (Exception e) {
-//                LOG.error(String.format("Ошибка при получении Json-параметров запроса: %s", queryParams.jsonData), e);
+                LOG.error(String.format("Ошибка при получении Json-параметров запроса: %s", queryParams.jsonData), e);
             }
             _setBioParamToRequest("region", requestRegionStat.region, request);
             _setBioParamToRequest("cardNumbers", requestRegionStat.cardNumbers, request);
