@@ -35,6 +35,8 @@
     </distributionManagement>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <bundle-plugin-version>2.5.3</bundle-plugin-version>
         <deploy-plugin-version>2.8.2</deploy-plugin-version>
         <war-plugi-version>2.6</war-plugi-version>
@@ -51,18 +53,16 @@
         <!-- Testing -->
         <testng.version>6.7</testng.version>
 
-        <pax.logging.version>1.7.2</pax.logging.version>
-        <org.eclipse.jetty.version>9.3.8.v20160314</org.eclipse.jetty.version>
-        <jetty-osgi-servlet-api.version>3.1.0.M3</jetty-osgi-servlet-api.version>
-        <servlet-api.version>3.0.1</servlet-api.version>
+        <pax.logging.version>1.10.1</pax.logging.version>
+        <org.eclipse.jetty.version>9.3.21.v20170918</org.eclipse.jetty.version>
+        <jetty-osgi-servlet-api.version>3.1.0.M3</jetty-osgi-servlet-api.version> <!-- next 4.0.x -->
+        <javax.servlet.servlet-api.version>3.0.1</javax.servlet.servlet-api.version> <!-- next 4.0.x -->
 
-        <org.quartz-scheduler.version>2.3.0</org.quartz-scheduler.version>
+       <bio4j-ng.version>1.7.0-SNAPSHOT</bio4j-ng.version>
 
-        <bio4j-ng.version>1.7.0-SNAPSHOT</bio4j-ng.version>
-
-        <org.glassfish.jersey.core.version>2.23</org.glassfish.jersey.core.version>
-        <com.fasterxml.jackson.core.version>2.7.4</com.fasterxml.jackson.core.version>
-        <org.jvnet.mimepull.version>1.9.7</org.jvnet.mimepull.version>
+        <org.glassfish.jersey.core.version>2.28</org.glassfish.jersey.core.version>
+        <com.fasterxml.jackson.core.version>2.9.8</com.fasterxml.jackson.core.version>
+        <org.jvnet.mimepull.version>1.9.11</org.jvnet.mimepull.version>
 
         <distr.base>target</distr.base>
         <distr.depends>${distr.base}/dependencies</distr.depends>
@@ -240,7 +240,7 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
+                <version>${javax.servlet.servlet-api.version}</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -275,7 +275,12 @@
                 <artifactId>mimepull</artifactId>
                 <version>${org.jvnet.mimepull.version}</version>
             </dependency>
-
+<!--            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${javax.ws.rs.version}</version>
+            </dependency>
+-->
             <!--jackson-->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
