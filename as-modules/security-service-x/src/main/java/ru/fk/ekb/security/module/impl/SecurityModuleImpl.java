@@ -16,6 +16,7 @@ import ru.bio4j.ng.model.transport.Param;
 import ru.bio4j.ng.model.transport.User;
 import ru.bio4j.ng.service.api.*;
 import ru.bio4j.ng.service.types.BioAppServiceBase;
+import ru.bio4j.ng.model.transport.BioQueryParams;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -67,7 +68,10 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
     }
 
     @Override
-    public User login(final String login, final String remoteIP, final String remoteClient) throws Exception {
+    public User login(final BioQueryParams qprms) throws Exception {
+        final String login = qprms.login;
+        final String remoteIP = qprms.remoteIP;
+        final String remoteClient = qprms.remoteClient;
         if (isNullOrEmpty(login))
             throw new BioError.Login.Unauthorized();
         LOG.debug("User {} logging in...", login);
@@ -87,7 +91,7 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
             }, null);
 
 
-            return getUser(stoken, remoteIP, remoteClient);
+            return getUser(qprms);
         } catch (SQLException ex) {
             switch (ex.getErrorCode()) {
                 case 20401:
@@ -109,15 +113,20 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
         return getCurUserProvider().loadUserFromDB(stokenOrUsrUid);
     }
 
-    public User getUser(final String stoken, final String remoteIP, final String remoteClient) throws Exception {
-        Boolean isLoggedin = loggedin(stoken, remoteIP, remoteClient);
+    public User getUser(final BioQueryParams qprms) throws Exception {
+        final String stoken = qprms.stoken;
+        final String remoteIP = qprms.remoteIP;
+        final String remoteClient = qprms.remoteClient;
+        Boolean isLoggedin = loggedin(qprms);
         if(isLoggedin)
             return getCurUserProvider().getUser(stoken, remoteIP, remoteClient);
         throw new BioError.Login.Unauthorized();
     }
 
     @Override
-    public void logoff(final String stoken, final String remoteIP) throws Exception {
+    public void logoff(final BioQueryParams qprms) throws Exception {
+        final String remoteIP = qprms.remoteIP;
+        final String stoken = qprms.stoken;
         final BioSQLDefinition sqlDefinition = this.getSQLDefinition("bio.logoff");
         final SQLContext context = this.getSQLContext();
 
@@ -137,7 +146,10 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
     }
 
     @Override
-    public Boolean loggedin(final String stoken, final String remoteIP, final String remoteClient) throws Exception {
+    public Boolean loggedin(final BioQueryParams qprms) throws Exception {
+        final String stoken = qprms.stoken;
+        final String remoteIP = qprms.remoteIP;
+        final String remoteClient = qprms.remoteClient;
         if (isNullOrEmpty(stoken))
             throw new BioError.Login.Unauthorized();
         final BioSQLDefinition sqlDefinition = this.getSQLDefinition("bio.loggedin");

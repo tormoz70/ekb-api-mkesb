@@ -17,7 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-import ru.bio4j.ng.service.types.BioQueryParams;
+import ru.bio4j.ng.model.transport.BioQueryParams;
 import ru.bio4j.ng.service.types.BioWrappedRequest;
 
 @Path("/api")

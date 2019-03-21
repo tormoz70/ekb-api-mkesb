@@ -23,4 +23,5 @@ test-output/
 out/
 /deploy/
 .git/
-/start.log
+2deploy/
+/start.bat - Ярлык.lnk
