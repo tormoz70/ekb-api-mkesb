@@ -52,7 +52,7 @@ pipeline {
 //					doGenerateSubmoduleConfigurations: false, 
 					extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'bio4j-distribution']], 
 //					submoduleCfg: [], 
-					userRemoteConfigs: [[credentialsId: 'jenkins', url: 'http://http://192.168.70.200/bio4j-ng/bio4j-distribution.git']]])
+					userRemoteConfigs: [[credentialsId: 'jenkins', url: 'http://192.168.70.200/bio4j-ng/bio4j-distribution.git']]])
 
 			}
 		}
