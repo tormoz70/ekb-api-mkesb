@@ -53,4 +53,13 @@ public class APISrvc extends RestSrvcBase {
         }
         return null;
     }
+
+    @GET
+    @Path("/film-stat")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<FilmStat> film_stat_get(@Context HttpServletRequest request) throws Exception {
+        List<FilmStat> filmStats = _getList("api.film_stat", request, FilmStat.class);
+        return filmStats;
+    }
+
 }

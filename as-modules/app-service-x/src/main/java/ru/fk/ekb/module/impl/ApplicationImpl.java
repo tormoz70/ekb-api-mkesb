@@ -8,12 +8,11 @@ import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.database.api.SQLContext;
 import ru.bio4j.ng.database.oracle.SQLContextFactory;
 import ru.bio4j.ng.service.api.BioAppService;
+import ru.bio4j.ng.service.api.BioHttpParamMap;
 import ru.bio4j.ng.service.api.DbConfigProvider;
 import ru.bio4j.ng.service.api.SQLContextConfig;
 import ru.bio4j.ng.service.types.BioAppServiceBase;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.util.Dictionary;
 
 @Component
@@ -82,14 +81,72 @@ public class ApplicationImpl extends BioAppServiceBase implements BioAppService 
         LOG.debug("Started");
     }
 
-//    @Override
-//    public ExpDatasetApi getExpDatasetApi() {
-//        EkbConfig cfg = this.getConfigurator().getConfig();
-//        ExpDatasetApi rslt = new ExpDatasetApi();
-//        rslt.setExportDatasetApiRun(cfg.getExportDatasetApiRun());
-//        rslt.setExportDatasetApiGetState(cfg.getExportDatasetApiGetState());
-//        rslt.setExportDatasetApiBreak(cfg.getExportDatasetApiBreak());
-//        return rslt;
-//    }
+    private BioHttpParamMap httpParamMap = new BioHttpParamMap() {
 
+        @Override
+        public String username() {
+            return "userName";
+        }
+
+        @Override
+        public String password() {
+            return "password";
+        }
+
+        @Override
+        public String pageSize() {
+            return "perPage";
+        }
+
+        @Override
+        public String page() {
+            return "page";
+        }
+
+        @Override
+        public String offset() {
+            return null;
+        }
+
+        @Override
+        public String securityToken() {
+            return null;
+        }
+
+        @Override
+        public String pageSizeHeader() {
+            return null;
+        }
+
+        @Override
+        public String pageHeader() {
+            return null;
+        }
+
+        @Override
+        public String offsetHeader() {
+            return null;
+        }
+
+        @Override
+        public String securityTokenHeader() {
+            return "AccessToken";
+        }
+
+        @Override
+        public String clientHeader() {
+            return null;
+        }
+
+        @Override
+        public String clientVerHeader() {
+            return null;
+        }
+    };
+
+
+    @Override
+    public BioHttpParamMap getHttpParamMap() throws Exception {
+        return httpParamMap;
+    }
 }

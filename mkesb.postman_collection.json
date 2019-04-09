@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dfa447cb-a088-4f2c-86d8-dac57e5f11b8",
+		"_postman_id": "de5c2139-c845-424f-9876-8e5f03cd11cc",
 		"name": "mkesb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -63,6 +63,49 @@
 			"response": []
 		},
 		{
+			"name": "mkesb film-stat GET",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "18a04514-218e-4994-bc2f-ba6ce4fa2128",
+						"exec": [
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost\");",
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://mkesb.sapi.fond-kino.ru\"); //prod"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-SToken",
+						"value": "3E851B245B874424E0531E32A8C00372",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{mkesbsrv}}/sapi/rest/api/film-stat",
+					"host": [
+						"{{mkesbsrv}}"
+					],
+					"path": [
+						"sapi",
+						"rest",
+						"api",
+						"film-stat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "mkesb region-stat POST",
 			"event": [
 				{
@@ -89,10 +132,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n        \"region\":\t\t\"7700000000000\",\n        \"startDate\":\t\"2018.10.01\",\n        \"endDate\":\t\t\"2018.12.31\"\n}"
+					"raw": "{\n        \"region\":\t\t\"7700000000000\",\n        \"startDate\":\t\"2019.01.01\",\n        \"endDate\":\t\t\"2019.03.14\"\n}"
 				},
 				"url": {
-					"raw": "{{mkesbsrv}}:8083/sapi/rest/api/region-stat?",
+					"raw": "{{mkesbsrv}}:8083/sapi/rest/api/region-stat",
 					"host": [
 						"{{mkesbsrv}}"
 					],
@@ -102,13 +145,102 @@
 						"rest",
 						"api",
 						"region-stat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN anonymous",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e0072774-90b6-4d7c-86f5-54e21d130f20",
+						"exec": [
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://5.8.177.195:8081\");",
+							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost:8083\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "eed15e1b-ba0c-459f-891b-47afe6589a19",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"console.log(jsonData.user.stoken);",
+							"postman.setEnvironmentVariable(\"stoken\", jsonData.user.stoken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"login\":\"anonymouse/123\"}"
+				},
+				"url": {
+					"raw": "{{mkesbsrv}}/sapi/rest/login",
+					"host": [
+						"{{mkesbsrv}}"
 					],
-					"query": [
-						{
-							"key": "cardNumbers",
-							"value": "111008618,111023318,111023918,111024918,114008818,114009518,114009918,114010018,121011717",
-							"disabled": true
-						}
+					"path": [
+						"sapi",
+						"rest",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN anonymous 6117",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e0072774-90b6-4d7c-86f5-54e21d130f20",
+						"exec": [
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://5.8.177.195:8081\");",
+							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost:8083\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "eed15e1b-ba0c-459f-891b-47afe6589a19",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"console.log(jsonData.user.stoken);",
+							"postman.setEnvironmentVariable(\"stoken\", jsonData.user.stoken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"login\":\"margokleo77@gmail.com/nifbobo\"}"
+				},
+				"url": {
+					"raw": "{{mkesbsrv}}/sapi/rest/login",
+					"host": [
+						"{{mkesbsrv}}"
+					],
+					"path": [
+						"sapi",
+						"rest",
+						"login"
 					]
 				}
 			},
