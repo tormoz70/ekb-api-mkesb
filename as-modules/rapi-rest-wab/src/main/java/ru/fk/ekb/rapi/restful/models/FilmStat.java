@@ -15,6 +15,6 @@ public class FilmStat {
     public String showTime;
     public Integer tickets;
     public Integer sessions;
-    @Prop(name = "sum")
-    public double summ;
+    @Prop(name = "summ") // name from DB recordset
+    public double sum;
 }
