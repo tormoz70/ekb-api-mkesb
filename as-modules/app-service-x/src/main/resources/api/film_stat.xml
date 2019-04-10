@@ -16,7 +16,9 @@ select * from table(${mkesbapi.current.vesion}.film_stat(
     holdingname=>:holdingname,
     showdatefrom=>:showdatefrom,
     showdateto=>:showdateto,
-    userorgid=>:p_sys_curusr_org_uid))
+    userorgid=>:p_sys_curusr_org_uid,
+    userrole=>:p_sys_curusr_roles
+    ))
         ]]></text>
         <param type="string" name="filmname"/>
         <param type="string" name="punum"/>
@@ -29,6 +31,7 @@ select * from table(${mkesbapi.current.vesion}.film_stat(
         <param type="string" name="showdatefrom"/>
         <param type="string" name="showdateto"/>
         <param type="string" name="userorgid"/>
+        <param type="string" name="userrole"/>
     </SQL>
     <fields>
         <field name="puNum" type="string"/>
