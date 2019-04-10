@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "de5c2139-c845-424f-9876-8e5f03cd11cc",
+		"_postman_id": "77ba0a7c-7fcc-4f54-aaee-dd6a48383728",
 		"name": "mkesb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -82,8 +82,9 @@
 				"header": [
 					{
 						"key": "X-SToken",
-						"value": "3E851B245B874424E0531E32A8C00372",
-						"type": "text"
+						"value": "{{stoken}}",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -91,7 +92,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{mkesbsrv}}/sapi/rest/api/film-stat",
+					"raw": "{{mkesbsrv}}/sapi/rest/api/film-stat?stoken={{stoken}}&filmName=урвине",
 					"host": [
 						"{{mkesbsrv}}"
 					],
@@ -100,6 +101,61 @@
 						"rest",
 						"api",
 						"film-stat"
+					],
+					"query": [
+						{
+							"key": "stoken",
+							"value": "{{stoken}}"
+						},
+						{
+							"key": "filmName",
+							"value": "урвине"
+						},
+						{
+							"key": "puNum",
+							"value": "114001418",
+							"disabled": true
+						},
+						{
+							"key": "orgId",
+							"value": "6484",
+							"disabled": true
+						},
+						{
+							"key": "orgName",
+							"value": "мау",
+							"disabled": true
+						},
+						{
+							"key": "region",
+							"value": "моск",
+							"disabled": true
+						},
+						{
+							"key": "city",
+							"value": "бал",
+							"disabled": true
+						},
+						{
+							"key": "holdingId",
+							"value": "310",
+							"disabled": true
+						},
+						{
+							"key": "holdingName",
+							"value": "сеть",
+							"disabled": true
+						},
+						{
+							"key": "showDateFrom",
+							"value": "20190401",
+							"disabled": true
+						},
+						{
+							"key": "showDateTo",
+							"value": "20190405",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -199,7 +255,7 @@
 			"response": []
 		},
 		{
-			"name": "LOGIN anonymous 6117",
+			"name": "LOGIN 6117",
 			"event": [
 				{
 					"listen": "prerequest",
