@@ -84,7 +84,7 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
             params.add(Param.builder().name("p_remote_ip").value(remoteIP).build());
             params.add(Param.builder().name("p_remote_client").value(remoteClient).build());
             params.add(Param.builder().name("v_stoken").type(MetaType.STRING).direction(Param.Direction.OUT).build());
-            String stoken = context.execBatch((ctx) -> {
+            qprms.stoken = context.execBatch((ctx) -> {
                 SQLStoredProc prc = ctx.createStoredProc();
                 prc.init(ctx.getCurrentConnection(), sqlDefinition.getExecSqlDef().getPreparedSql(), sqlDefinition.getExecSqlDef().getParamDeclaration()).execSQL(params, ctx.getCurrentUser());
                 return Paramus.paramValue(params, "v_stoken", String.class, null);
