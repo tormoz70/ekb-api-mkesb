@@ -23,8 +23,8 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${wab.name}</Bundle-Name>
-                        <Bundle-Vendor>givc.ru</Bundle-Vendor>
-                        <Bundle-Category>efond</Bundle-Category>
+                        <Bundle-Vendor>fk.ru</Bundle-Vendor>
+                        <Bundle-Category>ekb</Bundle-Category>
                         <Web-ContextPath>${wab.context.path}</Web-ContextPath>
                         <Export-Package />
                         <Import-Package>*,flexjson</Import-Package>
