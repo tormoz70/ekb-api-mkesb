@@ -1,6 +1,6 @@
 package ru.fk.ekb.rapi.restful.models;
 
-import ru.bio4j.ng.model.transport.Prop;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FilmStat {
     public String puNum;
@@ -15,6 +15,6 @@ public class FilmStat {
     public String showTime;
     public Integer tickets;
     public Integer sessions;
-    @Prop(name = "summ") // name from DB recordset
-    public double sum;
+    @JsonProperty("sum")
+    public double summ;
 }
