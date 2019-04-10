@@ -15,7 +15,7 @@ select * from table(${mkesbapi.current.vesion}.film_stat(
     holdingid=>:holdingid,
     holdingname=>:holdingname,
     showdatefrom=>:showdatefrom,
-    showdateto=>:showdatefrom,
+    showdateto=>:showdateto,
     userorgid=>:p_sys_curusr_org_uid))
         ]]></text>
         <param type="string" name="filmname"/>
