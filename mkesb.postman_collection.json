@@ -14,7 +14,7 @@
 						"id": "18a04514-218e-4994-bc2f-ba6ce4fa2128",
 						"exec": [
 							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost\");",
-							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://mkesb.sapi.fond-kino.ru\"); //prod"
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://mkesb.sapi.fond-kino.ru\"); //prod"
 						],
 						"type": "text/javascript"
 					}
@@ -28,11 +28,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{mkesbsrv}}:8083/sapi/rest/api/region-stat?region=5000000000000&startDate=2019.01.01&endDate=2019.03.31",
+					"raw": "{{mkesbsrv}}/sapi/rest/api/region-stat?region=5000000000000&startDate=2019.01.01&endDate=2019.03.31",
 					"host": [
 						"{{mkesbsrv}}"
 					],
-					"port": "8083",
 					"path": [
 						"sapi",
 						"rest",
@@ -83,8 +82,7 @@
 					{
 						"key": "X-SToken",
 						"value": "{{stoken}}",
-						"type": "text",
-						"disabled": true
+						"type": "text"
 					}
 				],
 				"body": {
@@ -92,7 +90,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{mkesbsrv}}/sapi/rest/api/film-stat?stoken={{stoken}}&filmName=урвине",
+					"raw": "{{mkesbsrv}}/sapi/rest/api/film-stat?city=бал",
 					"host": [
 						"{{mkesbsrv}}"
 					],
@@ -105,11 +103,13 @@
 					"query": [
 						{
 							"key": "stoken",
-							"value": "{{stoken}}"
+							"value": "{{stoken}}",
+							"disabled": true
 						},
 						{
 							"key": "filmName",
-							"value": "урвине"
+							"value": "урвине",
+							"disabled": true
 						},
 						{
 							"key": "puNum",
@@ -133,8 +133,7 @@
 						},
 						{
 							"key": "city",
-							"value": "бал",
-							"disabled": true
+							"value": "бал"
 						},
 						{
 							"key": "holdingId",
@@ -214,8 +213,8 @@
 					"script": {
 						"id": "e0072774-90b6-4d7c-86f5-54e21d130f20",
 						"exec": [
-							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://5.8.177.195:8081\");",
-							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost:8083\");"
+							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://mkesb.sapi.fond-kino.ru:8083\"); //prod",
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost:8083\");"
 						],
 						"type": "text/javascript"
 					}
@@ -262,8 +261,8 @@
 					"script": {
 						"id": "e0072774-90b6-4d7c-86f5-54e21d130f20",
 						"exec": [
-							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://5.8.177.195:8081\");",
-							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost:8083\");"
+							"postman.setEnvironmentVariable(\"mkesbsrv\", \"http://mkesb.sapi.fond-kino.ru:8083\"); //prod",
+							"//postman.setEnvironmentVariable(\"mkesbsrv\", \"http://localhost:8083\");"
 						],
 						"type": "text/javascript"
 					}
