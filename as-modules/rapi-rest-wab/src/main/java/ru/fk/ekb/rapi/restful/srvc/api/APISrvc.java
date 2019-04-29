@@ -70,7 +70,7 @@ public class APISrvc extends RestSrvcBase {
         User user = ((BioWrappedRequest)request).getUser();
         String prmsJson = ((BioWrappedRequest)request).getBioQueryParams().jsonData;
         KTCompParams params = null;
-        if(Strings.isNullOrEmpty(prmsJson))
+        if(!Strings.isNullOrEmpty(prmsJson))
             params = Jsons.decode(prmsJson, KTCompParams.class);
         if(params != null) {
             final BioAppService appService = getAppService();
@@ -79,7 +79,7 @@ public class APISrvc extends RestSrvcBase {
                 BioSQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_comps");
                 for(KTCompParam prm : prms.comps)
                     RestApiAdapter.execLocal(sqlDef, prm, ctx);
-                List<KTCompStat> r = RestApiAdapter.
+                List<KTCompStat> r = _getList0(ctx, "api.kt_comp_stat", null, prms, true, KTCompStat.class);
                 return r;
             }, params, user);
             return rslt;
