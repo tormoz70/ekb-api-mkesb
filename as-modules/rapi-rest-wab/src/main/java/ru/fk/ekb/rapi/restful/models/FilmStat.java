@@ -1,6 +1,9 @@
 package ru.fk.ekb.rapi.restful.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import ru.fk.ekb.rapi.restful.srvc.DoubleContextualSerializer;
+import ru.fk.ekb.rapi.restful.srvc.Precision;
 
 public class FilmStat {
     public String puNum;
@@ -16,5 +19,7 @@ public class FilmStat {
     public Integer tickets;
     public Integer sessions;
     @JsonProperty("sum")
+    @JsonSerialize(using = DoubleContextualSerializer.class)
+    @Precision(precision = 2)
     public double summ;
 }

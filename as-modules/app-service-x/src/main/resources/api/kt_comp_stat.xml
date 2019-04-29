@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cursor xmlns="http://bio4j.ru/biodef-repo/store"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://bio4j.ru/biodef-repo/store http://bio4j.ru/biodef-repo/store/store-v11.xsd"
+        multiselection="true">
+    <SQL action="select">
+        <text><![CDATA[
+select * from table(${mkesbapi.current.vesion}.kt_comp_stat(:periodFrom,:periodTo,:p_sys_curusr_roles))
+        ]]></text>
+        <param type="string" name="periodFrom"/>
+        <param type="string" name="periodTo"/>
+    </SQL>
+    <fields>
+        <field type="integer" name="ktcompId" pk="true"/>
+        <field type="integer" name="fkTcktsReturn00"/>
+        <field type="integer" name="fkTcktsReturn01"/>
+        <field type="integer" name="fkTcktsReturn11"/>
+        <field type="integer" name="fkTcktsTotal"/>
+        <field type="integer" name="fkSessReturn00"/>
+        <field type="integer" name="fkSessReturn01"/>
+        <field type="integer" name="fkSessReturn11"/>
+        <field type="integer" name="fkSessTotal"/>
+        <field type="decimal" name="fkSummReturn00"/>
+        <field type="decimal" name="fkSummReturn01"/>
+        <field type="decimal" name="fkSummReturn11"/>
+        <field type="decimal" name="fkSummTotal"/>
+        <field type="integer" name="fkFilmsReturn00"/>
+        <field type="integer" name="fkFilmsReturn01"/>
+        <field type="integer" name="fkFilmsReturn11"/>
+        <field type="integer" name="fkFilmsTota"/>
+        <field type="integer" name="tcktsTotal"/>
+        <field type="integer" name="sessTotal"/>
+        <field type="decimal" name="summTotal"/>
+        <field type="integer" name="filmsTotal"/>
+    </fields>
+</cursor>

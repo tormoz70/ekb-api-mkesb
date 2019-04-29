@@ -2,12 +2,13 @@ package ru.fk.ekb.rapi.restful.srvc.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.bio4j.ng.commons.converter.Converter;
 import ru.bio4j.ng.commons.utils.Jsons;
 import ru.bio4j.ng.commons.utils.Strings;
-import ru.bio4j.ng.commons.utils.Utl;
-import ru.bio4j.ng.model.transport.ABean;
-import ru.bio4j.ng.model.transport.ABeanPage;
+import ru.bio4j.ng.database.api.SQLContext;
+import ru.bio4j.ng.database.commons.RestApiAdapter;
+import ru.bio4j.ng.model.transport.User;
+import ru.bio4j.ng.service.api.BioAppService;
+import ru.bio4j.ng.service.api.BioSQLDefinition;
 import ru.fk.ekb.rapi.restful.models.*;
 import ru.fk.ekb.rapi.restful.srvc.RestSrvcBase;
 
@@ -60,6 +61,30 @@ public class APISrvc extends RestSrvcBase {
     public List<FilmStat> film_stat_get(@Context HttpServletRequest request) throws Exception {
         List<FilmStat> filmStats = _getList("api.film_stat", request, FilmStat.class, true);
         return filmStats;
+    }
+
+    @POST
+    @Path("/kinoteka/comp-stat")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<KTCompStat> kt_film_stat_get(@Context HttpServletRequest request) throws Exception {
+        User user = ((BioWrappedRequest)request).getUser();
+        String prmsJson = ((BioWrappedRequest)request).getBioQueryParams().jsonData;
+        KTCompParams params = null;
+        if(Strings.isNullOrEmpty(prmsJson))
+            params = Jsons.decode(prmsJson, KTCompParams.class);
+        if(params != null) {
+            final BioAppService appService = getAppService();
+
+            List<KTCompStat> rslt = _execBatch((SQLContext ctx, KTCompParams prms) -> {
+                BioSQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_comps");
+                for(KTCompParam prm : prms.comps)
+                    RestApiAdapter.execLocal(sqlDef, prm, ctx);
+                List<KTCompStat> r = RestApiAdapter.
+                return r;
+            }, params, user);
+            return rslt;
+        }
+        return null;
     }
 
 }
