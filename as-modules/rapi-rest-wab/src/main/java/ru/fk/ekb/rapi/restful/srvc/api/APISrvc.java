@@ -74,7 +74,6 @@ public class APISrvc extends RestSrvcBase {
             params = Jsons.decode(prmsJson, KTCompParams.class);
         if(params != null) {
             final BioAppService appService = getAppService();
-
             List<KTCompStat> rslt = _execBatch((SQLContext ctx, KTCompParams prms) -> {
                 BioSQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_comps");
                 for(KTCompParam prm : prms.comps)
