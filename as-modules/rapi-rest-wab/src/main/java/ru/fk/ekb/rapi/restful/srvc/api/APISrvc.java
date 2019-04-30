@@ -66,7 +66,7 @@ public class APISrvc extends RestSrvcBase {
     @POST
     @Path("/kinoteka/comp-stat")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<KTCompStat> kt_film_stat_get(@Context HttpServletRequest request) throws Exception {
+    public List<KTCompStat> kt_comp_stat_get(@Context HttpServletRequest request) throws Exception {
         User user = ((BioWrappedRequest)request).getUser();
         String prmsJson = ((BioWrappedRequest)request).getBioQueryParams().jsonData;
         KTCompParams params = null;
