@@ -2,7 +2,7 @@ package ru.fk.ekb.rapi.restful;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.bio4j.ng.service.types.BioWrappedRequest;
+import ru.bio4j.ng.service.types.WrappedRequest;
 import ru.bio4j.ng.service.types.WarSecurityFilterBase;
 
 import javax.servlet.*;
@@ -25,7 +25,7 @@ public class ProxyFilter extends WarSecurityFilterBase implements Filter {
 
         final HttpServletRequest req = (HttpServletRequest) request;
         try {
-            BioWrappedRequest rereq = new BioWrappedRequest(req);
+            WrappedRequest rereq = new WrappedRequest(req);
             rereq.putHeader("Access-Control-Allow-Origin", "*");
             ((HttpServletResponse)response).setHeader("Access-Control-Allow-Origin", "*");
             ((HttpServletResponse)response).setHeader("Access-Control-Allow-Credentials", "true");

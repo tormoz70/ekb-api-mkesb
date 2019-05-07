@@ -7,18 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.database.api.SQLContext;
 import ru.bio4j.ng.database.oracle.SQLContextFactory;
-import ru.bio4j.ng.service.api.BioAppService;
-import ru.bio4j.ng.service.api.BioHttpParamMap;
+import ru.bio4j.ng.model.transport.SQLContextConfig;
+import ru.bio4j.ng.service.api.AppService;
+import ru.bio4j.ng.service.api.HttpParamMap;
 import ru.bio4j.ng.service.api.DbConfigProvider;
-import ru.bio4j.ng.service.api.SQLContextConfig;
-import ru.bio4j.ng.service.types.BioAppServiceBase;
+import ru.bio4j.ng.service.types.AppServiceBase;
 
 import java.util.Dictionary;
 
 @Component
 @Instantiate
-@Provides(specifications = BioAppService.class)
-public class ApplicationImpl extends BioAppServiceBase implements BioAppService {
+@Provides(specifications = AppService.class)
+public class ApplicationImpl extends AppServiceBase implements AppService {
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationImpl.class);
 
     @Requires
@@ -146,7 +146,7 @@ public class ApplicationImpl extends BioAppServiceBase implements BioAppService 
 
 
     @Override
-    public BioHttpParamMap getHttpParamMap() throws Exception {
+    public HttpParamMap getHttpParamMap() throws Exception {
         return null;
     }
 }

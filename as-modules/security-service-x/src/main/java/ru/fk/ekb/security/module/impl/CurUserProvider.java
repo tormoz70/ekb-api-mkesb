@@ -8,7 +8,7 @@ import ru.bio4j.ng.database.api.SQLContext;
 import ru.bio4j.ng.model.transport.BioError;
 import ru.bio4j.ng.model.transport.Param;
 import ru.bio4j.ng.model.transport.User;
-import ru.bio4j.ng.service.api.BioSQLDefinition;
+import ru.bio4j.ng.service.api.SQLDefinition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class CurUserProvider {
     public User loadUserFromDB(final String stokenOrUsrUid) throws Exception {
         if (isNullOrEmpty(stokenOrUsrUid))
             throw new BioError.Login.Unauthorized();
-        final BioSQLDefinition sqlDefinition = module.getSQLDefinition("bio.get-user");
+        final SQLDefinition sqlDefinition = module.getSQLDefinition("bio.get-user");
         final SQLContext sqlContext = module.getSQLContext();
         User result = sqlContext.execBatch((ctx) -> {
                     final List<Param> prms = new ArrayList<>();

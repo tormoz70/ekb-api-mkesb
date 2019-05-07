@@ -5,12 +5,11 @@ import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.commons.utils.Jsons;
 import ru.bio4j.ng.commons.utils.Strings;
 import ru.bio4j.ng.database.api.SQLContext;
-import ru.bio4j.ng.database.commons.RestApiAdapter;
 import ru.bio4j.ng.model.transport.User;
-import ru.bio4j.ng.service.api.BioAppService;
-import ru.bio4j.ng.service.api.BioSQLDefinition;
+import ru.bio4j.ng.service.api.AppService;
+import ru.bio4j.ng.service.api.SQLDefinition;
+import ru.bio4j.ng.service.types.RestApiAdapter;
 import ru.fk.ekb.rapi.restful.models.*;
-import ru.fk.ekb.rapi.restful.srvc.RestSrvcBase;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -19,7 +18,8 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 import ru.bio4j.ng.model.transport.BioQueryParams;
-import ru.bio4j.ng.service.types.BioWrappedRequest;
+import ru.bio4j.ng.service.types.WrappedRequest;
+import ru.fk.ekb.rapi.restful.srvc.RestSrvcBase;
 
 @Path("/api")
 public class APISrvc extends RestSrvcBase {
@@ -38,7 +38,7 @@ public class APISrvc extends RestSrvcBase {
     public  List<PuQty> region_stat_post(@Context HttpServletRequest request) throws Exception {
         Logger LOG = LoggerFactory.getLogger(RestSrvcBase.class);
         RequestRegionStat requestRegionStat = null;
-        BioQueryParams queryParams = ((BioWrappedRequest)request).getBioQueryParams();
+        BioQueryParams queryParams = ((WrappedRequest)request).getBioQueryParams();
         if(!Strings.isNullOrEmpty(queryParams.jsonData)) {
             try {
                 requestRegionStat = Jsons.decode(queryParams.jsonData, RequestRegionStat.class);
@@ -67,15 +67,15 @@ public class APISrvc extends RestSrvcBase {
     @Path("/kinoteka/comp-stat")
     @Produces(MediaType.APPLICATION_JSON)
     public List<KTCompStat> kt_comp_stat_get(@Context HttpServletRequest request) throws Exception {
-        User user = ((BioWrappedRequest)request).getUser();
-        String prmsJson = ((BioWrappedRequest)request).getBioQueryParams().jsonData;
+        User user = ((WrappedRequest)request).getUser();
+        String prmsJson = ((WrappedRequest)request).getBioQueryParams().jsonData;
         KTCompParams params = null;
         if(!Strings.isNullOrEmpty(prmsJson))
             params = Jsons.decode(prmsJson, KTCompParams.class);
         if(params != null) {
-            final BioAppService appService = getAppService();
+            final AppService appService = getAppService();
             List<KTCompStat> rslt = _execBatch((SQLContext ctx, KTCompParams prms) -> {
-                BioSQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_comps");
+                SQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_comps");
                 for(KTCompParam prm : prms.comps)
                     RestApiAdapter.execLocal(sqlDef, prm, ctx);
                 List<KTCompStat> r = _getList0(ctx, "api.kt_comp_stat", null, prms, true, KTCompStat.class);

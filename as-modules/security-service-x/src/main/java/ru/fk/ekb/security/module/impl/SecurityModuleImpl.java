@@ -10,13 +10,9 @@ import ru.bio4j.ng.commons.utils.Strings;
 import ru.bio4j.ng.database.api.SQLContext;
 import ru.bio4j.ng.database.api.SQLStoredProc;
 import ru.bio4j.ng.database.oracle.SQLContextFactory;
-import ru.bio4j.ng.model.transport.BioError;
-import ru.bio4j.ng.model.transport.MetaType;
-import ru.bio4j.ng.model.transport.Param;
-import ru.bio4j.ng.model.transport.User;
+import ru.bio4j.ng.model.transport.*;
 import ru.bio4j.ng.service.api.*;
-import ru.bio4j.ng.service.types.BioAppServiceBase;
-import ru.bio4j.ng.model.transport.BioQueryParams;
+import ru.bio4j.ng.service.types.AppServiceBase;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,8 +23,8 @@ import static ru.bio4j.ng.commons.utils.Strings.isNullOrEmpty;
 
 @Component
 @Instantiate
-@Provides(specifications = BioSecurityService.class)
-public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurityService {
+@Provides(specifications = SecurityService.class)
+public class SecurityModuleImpl extends AppServiceBase implements SecurityService {
     private static final Logger LOG = LoggerFactory.getLogger(SecurityModuleImpl.class);
 
     private CurUserProvider curUserProvider;
@@ -76,7 +72,7 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
             throw new BioError.Login.Unauthorized();
         LOG.debug("User {} logging in...", login);
 
-        final BioSQLDefinition sqlDefinition = this.getSQLDefinition("bio.login");
+        final SQLDefinition sqlDefinition = this.getSQLDefinition("bio.login");
         final SQLContext context = this.getSQLContext();
         try {
             final List<Param> params = new ArrayList<Param>();
@@ -127,7 +123,7 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
     public void logoff(final BioQueryParams qprms) throws Exception {
         final String remoteIP = qprms.remoteIP;
         final String stoken = qprms.stoken;
-        final BioSQLDefinition sqlDefinition = this.getSQLDefinition("bio.logoff");
+        final SQLDefinition sqlDefinition = this.getSQLDefinition("bio.logoff");
         final SQLContext context = this.getSQLContext();
 
         String rslt = context.execBatch((ctx) -> {
@@ -152,7 +148,7 @@ public class SecurityModuleImpl extends BioAppServiceBase implements BioSecurity
         final String remoteClient = qprms.remoteClient;
         if (isNullOrEmpty(stoken))
             throw new BioError.Login.Unauthorized();
-        final BioSQLDefinition sqlDefinition = this.getSQLDefinition("bio.loggedin");
+        final SQLDefinition sqlDefinition = this.getSQLDefinition("bio.loggedin");
         final SQLContext context = this.getSQLContext();
 
         String rslt = context.execBatch((ctx) -> {

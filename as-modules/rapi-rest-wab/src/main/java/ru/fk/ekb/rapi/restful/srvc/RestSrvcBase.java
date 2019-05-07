@@ -2,7 +2,7 @@ package ru.fk.ekb.rapi.restful.srvc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.bio4j.ng.database.commons.RestServiceBase;
+import ru.bio4j.ng.service.types.RestServiceBase;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
