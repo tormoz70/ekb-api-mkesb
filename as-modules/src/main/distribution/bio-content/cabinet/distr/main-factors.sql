@@ -12,9 +12,9 @@ with ddd as (
         and (:p_orgId is null or a.org_id = to_number(:p_orgId))
         and (:p_pu_num is null or a.pu_num = to_number(:p_pu_num))
         and (
-            (:p_userRole in ('6', '8'))
+            (checkroles(:p_userRole,'6,8') = 1)
             or (
-                (:p_userRole in ('7'))
+                (checkroles(:p_userRole,'7') = 1)
                 and (
                     exists (
                         select 1

@@ -3,16 +3,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://bio4j.ru/biodef-repo/store http://bio4j.ru/biodef-repo/store/store-v11.xsd"
         multiselection="false">
-	<SQL action="select">
+    <SQL action="select">
         <text><![CDATA[{text-file:main-factors.sql}]]></text>
-		<param type="string" name="p_periodStart"/>
-		<param type="string" name="p_periodEnd"/>
+        <param type="string" name="p_periodStart"/>
+        <param type="string" name="p_periodEnd"/>
         <param type="string" name="p_holdingId"/>
         <param type="string" name="p_orgId"/>
-		<param type="string" name="p_pu_num"/>
+        <param type="string" name="p_pu_num"/>
         <param type="string" name="p_userRole"/>
         <param type="string" name="p_userOrgId"/>
-	</SQL>
+    </SQL>
     <fields>
         <field name="pu_num"           type="string"/>
         <field name="startdate"        type="string"/>
