@@ -1,69 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ru.bio4j.ng</groupId>
-	  <artifactId>bio4j-ng-server</artifactId>
-	  <version>2.0.0</version>
+    <parent>
+        <groupId>ru.bio4j.ng</groupId>
+        <artifactId>bio4j-ng-framework</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+	<artifactId>bio4j-ng-server</artifactId>
+	<version>2.0.0</version>
     <packaging>pom</packaging>
 
 	<description>App server</description>
 
-    <repositories>
-        <repository>
-            <id>maven-group</id>
-            <name>Maven Repo Group</name>
-            <url>http://192.168.70.190:8081/repository/maven-group/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <distributionManagement>
-        <repository>
-            <id>nexus-deployment</id>
-            <name>Releases</name>
-            <url>http://192.168.70.190:8081/repository/fk-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-deployment</id>
-            <name>Snapshots</name>
-            <url>http://192.168.70.190:8081/repository/fk-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <properties>
-        <bundle-plugin-version>2.5.3</bundle-plugin-version>
-        <deploy-plugin-version>2.8.2</deploy-plugin-version>
-        <war-plugi-version>2.6</war-plugi-version>
-        <antrun-plugin-version>1.8</antrun-plugin-version>
-        <compiler-plugin-version>3.1</compiler-plugin-version>
-        <dependency-plugin-version>2.7</dependency-plugin-version>
-
-        <!-- OSGi -->
-        <osgi.core.version>6.0.0</osgi.core.version>
-        <osgi.compendium.version>5.0.0</osgi.compendium.version>
-        <osgi.ipojo.version>1.12.1</osgi.ipojo.version>
-        <osgi.ipojo.event.version>1.8.0</osgi.ipojo.event.version>
-
-        <!-- Testing -->
-        <testng.version>6.7</testng.version>
-
-        <pax.logging.version>1.7.2</pax.logging.version>
-        <org.eclipse.jetty.version>9.3.8.v20160314</org.eclipse.jetty.version>
-        <jetty-osgi-servlet-api.version>3.1.0.M3</jetty-osgi-servlet-api.version>
-        <servlet-api.version>3.0.1</servlet-api.version>
-
-        <org.quartz-scheduler.version>2.3.0</org.quartz-scheduler.version>
-
-        <bio4j-ng.version>2.0.0-SNAPSHOT</bio4j-ng.version>
-
-        <org.glassfish.jersey.core.version>2.23</org.glassfish.jersey.core.version>
-        <com.fasterxml.jackson.core.version>2.7.4</com.fasterxml.jackson.core.version>
-        <org.jvnet.mimepull.version>1.9.7</org.jvnet.mimepull.version>
-
         <distr.base>target</distr.base>
         <distr.depends>${distr.base}/dependencies</distr.depends>
         <distr.bundles>${distr.depends}/bundle</distr.bundles>
@@ -74,17 +24,13 @@
         <distr.deploy>../${distr.deploy0}</distr.deploy>
         <distr.clean>${distr.deploy0}</distr.clean>
 
-        <jdk.version>jdk1.8.0_181</jdk.version>
-
         <bio-debug>false</bio-debug>
 
         <bio-error-handler>json</bio-error-handler>
         <jetty-http-port>8083</jetty-http-port>
         <remote-debugger-port>9092</remote-debugger-port>
-        <jmx-port>1103</jmx-port>
+        <jmx-port>1104</jmx-port>
 		
-		<bio-fcloud-api>ekb-api</bio-fcloud-api>
-
         <db-connection.pool.name>common.connectionPool</db-connection.pool.name>
         <db-connection.driver.name>oracle.jdbc.driver.OracleDriver</db-connection.driver.name>
         <db-connection.url>jdbc:oracle:thin:@192.168.70.30:1521:EKBS02</db-connection.url>
