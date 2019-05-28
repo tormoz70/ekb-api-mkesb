@@ -9,6 +9,7 @@ import ru.bio4j.ng.model.transport.User;
 import ru.bio4j.ng.service.api.AppService;
 import ru.bio4j.ng.service.api.SQLDefinition;
 import ru.bio4j.ng.service.types.RestApiAdapter;
+import ru.fk.ekb.module.impl.EkbAppModule;
 import ru.fk.ekb.rapi.restful.models.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,11 @@ import ru.fk.ekb.rapi.restful.srvc.RestSrvcBase;
 
 @Path("/api")
 public class APISrvc extends RestSrvcBase {
+
+    @Override
+    protected Class<? extends AppService> getAppServiceClass() {
+        return EkbAppModule.class;
+    }
 
     @GET
     @Path("/region-stat")

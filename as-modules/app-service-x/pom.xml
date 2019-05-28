@@ -32,6 +32,7 @@
                 <configuration>
                     <instructions>
                         <Import-Package>*,ru.bio4j.ng.service.api</Import-Package>
+                        <Export-Package>ru.fk.ekb.module.impl</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>
@@ -55,8 +56,8 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>org.eclipse.jetty.toolchain</groupId>
+            <artifactId>jetty-osgi-servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
 

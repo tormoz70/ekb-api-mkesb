@@ -36,61 +36,6 @@
             </plugin>
         </plugins>
     </build>
-    <dependencyManagement>
-        <dependencies>
-            <!--bio4j-ng-->
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>XStreamExts</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-commons</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-stypes</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-sapi</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-tmodel</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-dbapi</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-dba-commons</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-dba-pgsql</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>bio4j-ng-dba-oracle</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.bio4j.ng</groupId>
-                <artifactId>flexjson</artifactId>
-                <version>${bio4j-ng.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <modules>
         <module>app-service-x</module>
         <module>security-service-x</module>

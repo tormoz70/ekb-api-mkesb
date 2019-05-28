@@ -27,7 +27,7 @@
                         <Bundle-Category>ekb</Bundle-Category>
                         <Web-ContextPath>${wab.context.path}</Web-ContextPath>
                         <Export-Package />
-                        <Import-Package>*,flexjson</Import-Package>
+                        <Import-Package>*,flexjson,ru.fk.ekb.module.impl</Import-Package>
                     </instructions>
                 </configuration>
                 <executions>
@@ -196,6 +196,13 @@
         <dependency>
             <groupId>ru.bio4j.ng</groupId>
             <artifactId>flexjson</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>fk-ekb-app-service-x</artifactId>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
 

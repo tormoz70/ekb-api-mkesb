@@ -17,8 +17,8 @@ import java.util.Dictionary;
 
 @Component
 @Instantiate
-@Provides(specifications = AppService.class)
-public class ApplicationImpl extends AppServiceBase implements AppService {
+@Provides(specifications = EkbAppModule.class)
+public class ApplicationImpl extends AppServiceBase implements EkbAppModule {
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationImpl.class);
 
     @Requires
@@ -81,72 +81,4 @@ public class ApplicationImpl extends AppServiceBase implements AppService {
         LOG.debug("Started");
     }
 
-//    private BioHttpParamMap httpParamMap = new BioHttpParamMap() {
-//
-//        @Override
-//        public String username() {
-//            return "userName";
-//        }
-//
-//        @Override
-//        public String password() {
-//            return "password";
-//        }
-//
-//        @Override
-//        public String pageSize() {
-//            return "perPage";
-//        }
-//
-//        @Override
-//        public String page() {
-//            return "page";
-//        }
-//
-//        @Override
-//        public String offset() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String securityToken() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String pageSizeHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String pageHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String offsetHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String securityTokenHeader() {
-//            return "AccessToken";
-//        }
-//
-//        @Override
-//        public String clientHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String clientVerHeader() {
-//            return null;
-//        }
-//    };
-
-
-    @Override
-    public HttpParamMap getHttpParamMap() throws Exception {
-        return null;
-    }
 }

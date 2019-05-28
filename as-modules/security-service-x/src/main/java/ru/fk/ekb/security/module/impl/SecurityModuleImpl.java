@@ -165,6 +165,7 @@ public class SecurityModuleImpl extends AppServiceBase implements SecurityServic
         return Strings.compare(rslt, "OK", true);
     }
 
+
     @Updated
     public synchronized void updated(Dictionary conf) throws Exception {
         doOnUpdated(conf, "security-config-updated");
@@ -176,4 +177,79 @@ public class SecurityModuleImpl extends AppServiceBase implements SecurityServic
         //fireEventModuleUpdated();
         LOG.debug("Started");
     }
+
+//    private BioHttpParamMap httpParamMap = new BioHttpParamMap() {
+//
+//        @Override
+//        public String username() {
+//            return "userName";
+//        }
+//
+//        @Override
+//        public String password() {
+//            return "password";
+//        }
+//
+//        @Override
+//        public String pageSize() {
+//            return "perPage";
+//        }
+//
+//        @Override
+//        public String page() {
+//            return "page";
+//        }
+//
+//        @Override
+//        public String offset() {
+//            return null;
+//        }
+//
+//        @Override
+//        public String securityToken() {
+//            return null;
+//        }
+//
+//        @Override
+//        public String pageSizeHeader() {
+//            return null;
+//        }
+//
+//        @Override
+//        public String pageHeader() {
+//            return null;
+//        }
+//
+//        @Override
+//        public String offsetHeader() {
+//            return null;
+//        }
+//
+//        @Override
+//        public String securityTokenHeader() {
+//            return "AccessToken";
+//        }
+//
+//        @Override
+//        public String clientHeader() {
+//            return null;
+//        }
+//
+//        @Override
+//        public String clientVerHeader() {
+//            return null;
+//        }
+//    };
+
+
+    @Override
+    public HttpParamMap getHttpParamMap() throws Exception {
+        return null;
+    }
+
+    @Override
+    public SecurityErrorHandler createSecurityErrorHandler() {
+        return null;
+    }
+
 }
