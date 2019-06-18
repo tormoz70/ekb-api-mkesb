@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cursor xmlns="http://bio4j.ru/biodef-repo/store"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://bio4j.ru/biodef-repo/store http://bio4j.ru/biodef-repo/store/store-v11.xsd"
+        multiselection="true">
+    <SQL action="select">
+        <text><![CDATA[
+select * from table(${mkesbapi.current.vesion}.kt_film_stat(:periodFrom,:periodTo,:p_sys_curusr_roles))
+        ]]></text>
+        <param type="string" name="periodFrom"/>
+        <param type="string" name="periodTo"/>
+    </SQL>
+    <fields>
+        <field type="string" name="puNum" pk="true"/>
+        <field type="string" name="filmName"/>
+        <field type="integer" name="tcktsTotal"/>
+        <field type="integer" name="sessTotal"/>
+        <field type="decimal" name="summTotal"/>
+    </fields>
+</cursor>

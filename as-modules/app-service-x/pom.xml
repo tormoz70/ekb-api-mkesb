@@ -12,7 +12,7 @@
     <packaging>bundle</packaging>
 
     <properties>
-        <mkesbapi.current.vesion>MKESB_API03_DEV</mkesbapi.current.vesion>
+        <mkesbapi.current.vesion>MKESB_API04_DEV</mkesbapi.current.vesion>
     </properties>
 
     <build>

@@ -92,4 +92,26 @@ public class APISrvc extends RestSrvcBase {
         return null;
     }
 
+    @POST
+    @Path("/kinoteka/film-stat")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<KTFilmStat> kt_film_stat_get(@Context HttpServletRequest request) throws Exception {
+        User user = ((WrappedRequest)request).getUser();
+        String prmsJson = ((WrappedRequest)request).getBioQueryParams().jsonData;
+        KTFilmParams params = null;
+        if(!Strings.isNullOrEmpty(prmsJson))
+            params = Jsons.decode(prmsJson, KTFilmParams.class);
+        if(params != null) {
+            final AppService appService = getAppService();
+            List<KTFilmStat> rslt = _execBatch((SQLContext ctx, KTFilmParams prms) -> {
+                SQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_pus");
+                RestApiAdapter.execLocal(sqlDef, prms, ctx);
+                List<KTFilmStat> r = _getList0(ctx, "api.kt_film_stat", null, prms, true, KTFilmStat.class);
+                return r;
+            }, params, user);
+            return rslt;
+        }
+        return null;
+    }
+
 }
