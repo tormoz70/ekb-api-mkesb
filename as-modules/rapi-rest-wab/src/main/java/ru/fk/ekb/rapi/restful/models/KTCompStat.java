@@ -30,7 +30,7 @@ public class KTCompStat {
     public Long fkFilmsReturn00;
     public Long fkFilmsReturn01;
     public Long fkFilmsReturn11;
-    public Long fkFilmsTota;
+    public Long fkFilmsTotal;
     public Long tcktsTotal;
     public Long sessTotal;
     @JsonSerialize(using = DoubleContextualSerializer.class)

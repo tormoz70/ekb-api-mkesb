@@ -27,7 +27,7 @@ select * from table(${mkesbapi.current.vesion}.kt_comp_stat(:periodFrom,:periodT
         <field type="integer" name="fkFilmsReturn00"/>
         <field type="integer" name="fkFilmsReturn01"/>
         <field type="integer" name="fkFilmsReturn11"/>
-        <field type="integer" name="fkFilmsTota"/>
+        <field type="integer" name="fkFilmsTotal"/>
         <field type="integer" name="tcktsTotal"/>
         <field type="integer" name="sessTotal"/>
         <field type="decimal" name="summTotal"/>
