@@ -43,9 +43,31 @@
         <db-connection.current.schema>GIVCADMIN</db-connection.current.schema>
 
         <log4j.app.package>ru.fk.ekb</log4j.app.package>
-        <log4j.app.level>DEBUG</log4j.app.level>
 
     </properties>
+
+    <profiles>
+        <profile>
+            <id>DEV</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <log4j.bio4j.level>DEBUG</log4j.bio4j.level>
+                <log4j.app.level>DEBUG</log4j.app.level>
+            </properties>
+        </profile>
+        <profile>
+            <id>PROD</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <log4j.bio4j.level>INFO</log4j.bio4j.level>
+                <log4j.app.level>INFO</log4j.app.level>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>bio-as</finalName>

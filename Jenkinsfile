@@ -25,14 +25,6 @@ pipeline {
 	stages {
 		stage('Prepare') {
 			steps {
-/*				configFileProvider([configFile(fileId: 'my-maven-settings', variable: 'MY_MAVEN_SETTINGS')]) {
-					sh 'mvn -s $MY_MAVEN_SETTINGS clean'
-				}
-
-				withMaven(mavenSettingsConfig : "my-maven-settings") {
-					sh "mvn clean"
-				}
-*/
 				echo 'Some preparing ...'
 				sh 'rm -f -r ${WORKSPACE}/*'
 				sh 'mkdir -p ${WORKSPACE}/bio4j-distribution'
@@ -40,18 +32,11 @@ pipeline {
 		}
 		
 		stage('Pull') {
-/*			when { 
-				// skip this stage unless on Dev branch 
-				branch "dev" 
-			}
-*/
 			steps {
 				git(url: 'http://192.168.70.200/ekb-2/ekb-server-mkesb.git', branch: 'master', credentialsId: 'jenkins')
 
 				checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
-//					doGenerateSubmoduleConfigurations: false, 
-					extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'bio4j-distribution']], 
-//					submoduleCfg: [], 
+					extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'bio4j-distribution']],
 					userRemoteConfigs: [[credentialsId: 'jenkins', url: 'http://192.168.70.200/bio4j-ng/bio4j-distribution.git']]])
 
 			}
@@ -59,20 +44,10 @@ pipeline {
 		
 		stage('Build') {
 			steps {
-/*
-				configFileProvider([configFile(fileId: 'nexus-maven-settings', variable: 'MAVEN_SETTINGS')]) {
-					sh 'mvn -s $MAVEN_SETTINGS clean install'
-				}
-*/				
-				sh 'mvn clean install'
+				sh 'mvn clean install -P PROD'
 			}
 		}
 		stage('Publish') {
-/*			when { 
-				// skip this stage unless on Dev branch
-				branch "dev" 
-			}
-*/
 			steps {
 				sh 'echo QWE'
 				
@@ -103,22 +78,12 @@ pipeline {
 	        }
         	success {
 	            echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
-/*
-        	  // we only worry about archiving the jar file if the build steps are successful
-	          archiveArtifacts(artifacts: '*.jar', allowEmptyArchive: true) 
-*/
 	        }
         	unstable {
 	          echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
         	}
 	        failure {
         	    echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
-/*
-		// notify users when the Pipeline fails
-		mail to: 'team@example.com',
-			subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-			body: "Something is wrong with ${env.BUILD_URL}"
-*/
         	}
 	}
 }
