@@ -12,6 +12,7 @@
     <properties>
         <wab.name>Ekb Remote API WAB Service</wab.name>
         <wab.context.path>/sapi</wab.context.path>
+        <swagger-version>2.0.0</swagger-version>
     </properties>
 
     <build>
@@ -83,6 +84,49 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-ipojo-plugin</artifactId>
             </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.openapitools</groupId>-->
+<!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
+<!--                <version>4.0.3-SNAPSHOT</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>-->
+<!--                            <generatorName>java</generatorName>-->
+<!--                            <configOptions>-->
+<!--                                <sourceFolder>${project.basedir}/src/main/java/</sourceFolder>-->
+<!--                            </configOptions>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <groupId>io.openapitools.swagger</groupId>-->
+<!--                <artifactId>swagger-maven-plugin</artifactId>-->
+<!--                <version></version>-->
+<!--                <configuration>-->
+<!--                    <resourcePackages>-->
+<!--                        <resourcePackage>io.openapitools.swagger.example</resourcePackage>-->
+<!--                        <resourcePackage>io.openapitools.swagger.example.alternate</resourcePackage>-->
+<!--                    </resourcePackages>-->
+<!--                    <outputDirectory>${basedir}/target/</outputDirectory>-->
+<!--                    <outputFilename>swagger</outputFilename>-->
+<!--                    <outputFormats>JSON,YAML</outputFormats>-->
+<!--                    <prettyPrint>true</prettyPrint>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
     <dependencies>

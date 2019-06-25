@@ -9,7 +9,7 @@ import ru.bio4j.ng.model.transport.User;
 import ru.bio4j.ng.service.api.AppService;
 import ru.bio4j.ng.service.api.SQLDefinition;
 import ru.bio4j.ng.service.types.RestApiAdapter;
-import ru.fk.ekb.module.impl.EkbAppModule;
+import ru.bio4j.ng.service.types.RestHelper;
 import ru.fk.ekb.rapi.restful.models.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,21 +20,16 @@ import java.util.List;
 
 import ru.bio4j.ng.model.transport.BioQueryParams;
 import ru.bio4j.ng.service.types.WrappedRequest;
-import ru.fk.ekb.rapi.restful.srvc.RestSrvcBase;
 
 @Path("/api")
-public class APISrvc extends RestSrvcBase {
+public class APISrvc {
 
-    @Override
-    protected Class<? extends AppService> getAppServiceClass() {
-        return EkbAppModule.class;
-    }
 
     @GET
     @Path("/region-stat")
     @Produces(MediaType.APPLICATION_JSON)
     public List<PuQty> region_stat_get(@Context HttpServletRequest request) throws Exception {
-        List<PuQty> puQties = _getList("api.region_stat", request, PuQty.class);
+        List<PuQty> puQties = RestHelper.getInstance().getList("api.region_stat", request, PuQty.class);
         return puQties;
     }
 
@@ -42,7 +37,7 @@ public class APISrvc extends RestSrvcBase {
     @Path("/region-stat")
     @Produces(MediaType.APPLICATION_JSON)
     public  List<PuQty> region_stat_post(@Context HttpServletRequest request) throws Exception {
-        Logger LOG = LoggerFactory.getLogger(RestSrvcBase.class);
+        Logger LOG = LoggerFactory.getLogger(APISrvc.class);
         RequestRegionStat requestRegionStat = null;
         BioQueryParams queryParams = ((WrappedRequest)request).getBioQueryParams();
         if(!Strings.isNullOrEmpty(queryParams.jsonData)) {
@@ -51,11 +46,11 @@ public class APISrvc extends RestSrvcBase {
             } catch (Exception e) {
                 LOG.error(String.format("Ошибка при получении Json-параметров запроса: %s", queryParams.jsonData), e);
             }
-            _setBioParamToRequest("region", requestRegionStat.region, request);
-            _setBioParamToRequest("cardNumbers", requestRegionStat.cardNumbers, request);
-            _setBioParamToRequest("startDate", requestRegionStat.startDate, request);
-            _setBioParamToRequest("endDate", requestRegionStat.endDate, request);
-            List<PuQty> puQties = _getList("api.region_stat", request, PuQty.class, true);
+            RestHelper.getInstance().setBioParamToRequest("region", requestRegionStat.region, request);
+            RestHelper.getInstance().setBioParamToRequest("cardNumbers", requestRegionStat.cardNumbers, request);
+            RestHelper.getInstance().setBioParamToRequest("startDate", requestRegionStat.startDate, request);
+            RestHelper.getInstance().setBioParamToRequest("endDate", requestRegionStat.endDate, request);
+            List<PuQty> puQties = RestHelper.getInstance().getList("api.region_stat", request, PuQty.class, true);
             return  puQties;
         }
         return null;
@@ -65,7 +60,7 @@ public class APISrvc extends RestSrvcBase {
     @Path("/film-stat")
     @Produces(MediaType.APPLICATION_JSON)
     public List<FilmStat> film_stat_get(@Context HttpServletRequest request) throws Exception {
-        List<FilmStat> filmStats = _getList("api.film_stat", request, FilmStat.class, true);
+        List<FilmStat> filmStats = RestHelper.getInstance().getList("api.film_stat", request, FilmStat.class, true);
         return filmStats;
     }
 
@@ -79,12 +74,12 @@ public class APISrvc extends RestSrvcBase {
         if(!Strings.isNullOrEmpty(prmsJson))
             params = Jsons.decode(prmsJson, KTCompParams.class);
         if(params != null) {
-            final AppService appService = getAppService();
-            List<KTCompStat> rslt = _execBatch((SQLContext ctx, KTCompParams prms) -> {
+            final AppService appService = RestHelper.getInstance().getAppService();
+            List<KTCompStat> rslt = RestHelper.getInstance().execBatch((SQLContext ctx, KTCompParams prms) -> {
                 SQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_comps");
                 for(KTCompParam prm : prms.comps)
                     RestApiAdapter.execLocal(sqlDef, prm, ctx);
-                List<KTCompStat> r = _getList0(ctx, "api.kt_comp_stat", null, prms, true, KTCompStat.class);
+                List<KTCompStat> r = RestHelper.getInstance().getList0(ctx, "api.kt_comp_stat", null, prms, true, KTCompStat.class);
                 return r;
             }, params, user);
             return rslt;
@@ -102,11 +97,11 @@ public class APISrvc extends RestSrvcBase {
         if(!Strings.isNullOrEmpty(prmsJson))
             params = Jsons.decode(prmsJson, KTFilmParams.class);
         if(params != null) {
-            final AppService appService = getAppService();
-            List<KTFilmStat> rslt = _execBatch((SQLContext ctx, KTFilmParams prms) -> {
+            final AppService appService = RestHelper.getInstance().getAppService();
+            List<KTFilmStat> rslt = RestHelper.getInstance().execBatch((SQLContext ctx, KTFilmParams prms) -> {
                 SQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_pus");
                 RestApiAdapter.execLocal(sqlDef, prms, ctx);
-                List<KTFilmStat> r = _getList0(ctx, "api.kt_film_stat", null, prms, true, KTFilmStat.class);
+                List<KTFilmStat> r = RestHelper.getInstance().getList0(ctx, "api.kt_film_stat", null, prms, true, KTFilmStat.class);
                 return r;
             }, params, user);
             return rslt;
