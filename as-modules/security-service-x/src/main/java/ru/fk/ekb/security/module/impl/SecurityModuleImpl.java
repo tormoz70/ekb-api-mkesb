@@ -13,6 +13,7 @@ import ru.bio4j.ng.database.oracle.SQLContextFactory;
 import ru.bio4j.ng.model.transport.*;
 import ru.bio4j.ng.service.api.*;
 import ru.bio4j.ng.service.types.AppServiceBase;
+import ru.bio4j.ng.service.types.SecurityServiceBase;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import static ru.bio4j.ng.commons.utils.Strings.isNullOrEmpty;
 @Component
 @Instantiate
 @Provides(specifications = SecurityService.class)
-public class SecurityModuleImpl extends AppServiceBase implements SecurityService {
+public class SecurityModuleImpl extends SecurityServiceBase implements SecurityService {
     private static final Logger LOG = LoggerFactory.getLogger(SecurityModuleImpl.class);
 
     private CurUserProvider curUserProvider;
@@ -176,80 +177,6 @@ public class SecurityModuleImpl extends AppServiceBase implements SecurityServic
         LOG.debug("Starting...");
         //fireEventModuleUpdated();
         LOG.debug("Started");
-    }
-
-//    private BioHttpParamMap httpParamMap = new BioHttpParamMap() {
-//
-//        @Override
-//        public String username() {
-//            return "userName";
-//        }
-//
-//        @Override
-//        public String password() {
-//            return "password";
-//        }
-//
-//        @Override
-//        public String pageSize() {
-//            return "perPage";
-//        }
-//
-//        @Override
-//        public String page() {
-//            return "page";
-//        }
-//
-//        @Override
-//        public String offset() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String securityToken() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String pageSizeHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String pageHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String offsetHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String securityTokenHeader() {
-//            return "AccessToken";
-//        }
-//
-//        @Override
-//        public String clientHeader() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String clientVerHeader() {
-//            return null;
-//        }
-//    };
-
-
-    @Override
-    public HttpParamMap getHttpParamMap() throws Exception {
-        return null;
-    }
-
-    @Override
-    public SecurityErrorHandler createSecurityErrorHandler() {
-        return null;
     }
 
 }
