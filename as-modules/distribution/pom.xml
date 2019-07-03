@@ -24,7 +24,17 @@
                         </goals>
                         <configuration>
                             <artifactItems>
-                                <!-- EFond Distribution -->
+                                <!-- Jetty Distribution -->
+                                <artifactItem>
+                                    <groupId>ru.bio4j.ng</groupId>
+                                    <artifactId>jetty-osgi-boot</artifactId>
+                                    <version>${bio4j-ng.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${distr.bundles}</outputDirectory>
+                                </artifactItem>
+
+                                <!-- App Distribution -->
                                 <artifactItem>
                                     <groupId>${project.groupId}</groupId>
                                     <artifactId>fk-ekb-app-service-x</artifactId>
