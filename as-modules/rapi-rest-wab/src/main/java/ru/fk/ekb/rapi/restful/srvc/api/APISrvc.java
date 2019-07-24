@@ -50,7 +50,7 @@ public class APISrvc {
             RestHelper.getInstance().setBioParamToRequest("cardNumbers", requestRegionStat.cardNumbers, request);
             RestHelper.getInstance().setBioParamToRequest("startDate", requestRegionStat.startDate, request);
             RestHelper.getInstance().setBioParamToRequest("endDate", requestRegionStat.endDate, request);
-            List<PuQty> puQties = RestHelper.getInstance().getList("api.region_stat", request, PuQty.class, true);
+            List<PuQty> puQties = RestHelper.getInstance().getListAll("api.region_stat", request, PuQty.class);
             return  puQties;
         }
         return null;
@@ -60,7 +60,7 @@ public class APISrvc {
     @Path("/film-stat")
     @Produces(MediaType.APPLICATION_JSON)
     public List<FilmStat> film_stat_get(@Context HttpServletRequest request) throws Exception {
-        List<FilmStat> filmStats = RestHelper.getInstance().getList("api.film_stat", request, FilmStat.class, true);
+        List<FilmStat> filmStats = RestHelper.getInstance().getListAll("api.film_stat", request, FilmStat.class);
         return filmStats;
     }
 
@@ -79,9 +79,9 @@ public class APISrvc {
                 SQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_comps");
                 for(KTCompParam prm : prms.comps)
                     RestApiAdapter.execLocal(sqlDef, prm, ctx);
-                List<KTCompStat> r = RestHelper.getInstance().getList0(ctx, "api.kt_comp_stat", null, prms, true, KTCompStat.class);
+                List<KTCompStat> r = RestHelper.getInstance().getList0All(ctx, "api.kt_comp_stat", null, prms, KTCompStat.class);
                 return r;
-            }, params, user);
+            }, params);
             return rslt;
         }
         return null;
@@ -101,9 +101,9 @@ public class APISrvc {
             List<KTFilmStat> rslt = RestHelper.getInstance().execBatch((SQLContext ctx, KTFilmParams prms) -> {
                 SQLDefinition sqlDef = appService.getSQLDefinition("api.kt_store_pus");
                 RestApiAdapter.execLocal(sqlDef, prms, ctx);
-                List<KTFilmStat> r = RestHelper.getInstance().getList0(ctx, "api.kt_film_stat", null, prms, true, KTFilmStat.class);
+                List<KTFilmStat> r = RestHelper.getInstance().getList0All(ctx, "api.kt_film_stat", null, prms, KTFilmStat.class);
                 return r;
-            }, params, user);
+            }, params);
             return rslt;
         }
         return null;
