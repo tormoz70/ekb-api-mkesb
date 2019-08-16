@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.commons.types.Paramus;
 import ru.bio4j.ng.commons.utils.Strings;
 import ru.bio4j.ng.database.api.SQLContext;
+import ru.bio4j.ng.database.api.SQLDefinition;
 import ru.bio4j.ng.database.api.SQLStoredProc;
 import ru.bio4j.ng.database.oracle.SQLContextFactory;
 import ru.bio4j.ng.model.transport.*;

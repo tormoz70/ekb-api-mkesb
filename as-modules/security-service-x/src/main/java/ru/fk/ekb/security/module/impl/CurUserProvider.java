@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.commons.types.Paramus;
 import ru.bio4j.ng.commons.utils.Utl;
 import ru.bio4j.ng.database.api.SQLContext;
+import ru.bio4j.ng.database.api.SQLDefinition;
 import ru.bio4j.ng.model.transport.BioError;
 import ru.bio4j.ng.model.transport.Param;
 import ru.bio4j.ng.model.transport.User;
-import ru.bio4j.ng.service.api.SQLDefinition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
