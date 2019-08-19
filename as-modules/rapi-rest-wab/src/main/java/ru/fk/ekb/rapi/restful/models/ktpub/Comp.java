@@ -17,6 +17,7 @@ public class Comp {
     public String comps_count;
 
     public String id;
+    public Long index_number;
     public String name;
     public String total_movies;
     public String refundable_support;

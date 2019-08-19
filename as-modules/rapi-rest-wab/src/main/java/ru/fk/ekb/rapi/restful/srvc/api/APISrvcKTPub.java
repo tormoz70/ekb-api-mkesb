@@ -85,9 +85,9 @@ public class APISrvcKTPub {
 
     private static void _decodeSupportId(final HttpServletRequest request) throws Exception {
         Integer supportId = RestHelper.getInstance().getBioParamFromRequest("support_id", request, Integer.class);
-        if (supportId != null && supportId == 1)
+        if (supportId != null && supportId == 0)
             RestHelper.getInstance().setBioParamToRequest("p_subn", "10", request);
-        else if (supportId != null && supportId == 2)
+        else if (supportId != null && supportId == 1)
             RestHelper.getInstance().setBioParamToRequest("p_subn", "01", request);
         else
             RestHelper.getInstance().setBioParamToRequest("p_subn", null, request);
@@ -108,27 +108,31 @@ public class APISrvcKTPub {
 
         RspPrj dataResult = new RspPrj();
         dataResult.movies = aBeanPage;
-        Prj totals = dataResult.movies.get(0);
-        dataResult.movies.remove(totals);
+
+        for (Prj prj : dataResult.movies) {
+            try {
+                prj.companies = new ArrayList<>();
+                String[] compList = Strings.split(prj.comps, "|-|");
+                for (String compItem : compList) {
+                    PrjComp pc = new PrjComp();
+                    pc.id = compItem.substring(1, compItem.indexOf("]"));
+                    pc.name = compItem.substring(compItem.indexOf("]") + 2);
+                    prj.companies.add(pc);
+                }
+                _decodeFinancingSource(prj);
+            } catch (Exception e) {
+                throw new Exception(String.format("Error on processing prg: %s(%s)", prj.id, prj.name), e);
+            }
+
+        }
+
+        Prj totals = RestHelper.getInstance().getFirst(bioCode+"-ttl", request, Prj.class);
         dataResult.total_movies = totals.prjs_count;
         dataResult.total_refundable_support = totals.refundable_support;
         dataResult.total_nonrefundable_support = totals.nonrefundable_support;
         dataResult.total_budget = totals.budget;
         dataResult.total_box_office = totals.box_office;
         dataResult.total_audience = totals.audience;
-
-        for (Prj prj : dataResult.movies) {
-            prj.companies = new ArrayList<>();
-            String[] compList = Strings.split(prj.comps, "|-|");
-            for (String compItem : compList) {
-                PrjComp pc = new PrjComp();
-                pc.id = compItem.substring(1, compItem.indexOf("]"));
-                pc.name = compItem.substring(compItem.indexOf("]") + 2);
-                prj.companies.add(pc);
-            }
-            _decodeFinancingSource(prj);
-
-        }
 
         return dataResult;
     }
@@ -168,13 +172,6 @@ public class APISrvcKTPub {
 
         RspComp dataResult = new RspComp();
         dataResult.companies = aBeanPage;
-        Comp totals = dataResult.companies.get(0);
-        dataResult.companies.remove(totals);
-        dataResult.total_companies = totals.comps_count;
-        dataResult.total_refundable_support = totals.refundable_support;
-        dataResult.total_nonrefundable_support = totals.nonrefundable_support;
-        dataResult.total_box_office = totals.box_office;
-        dataResult.total_audience = totals.audience;
 
         for(Comp comp : dataResult.companies) {
             comp.movies = new ArrayList<>();
@@ -207,6 +204,13 @@ public class APISrvcKTPub {
             }
 
         }
+
+        Comp totals = RestHelper.getInstance().getFirst(bioCode+"-ttl", request, Comp.class);
+        dataResult.total_companies = totals.comps_count;
+        dataResult.total_refundable_support = totals.refundable_support;
+        dataResult.total_nonrefundable_support = totals.nonrefundable_support;
+        dataResult.total_box_office = totals.box_office;
+        dataResult.total_audience = totals.audience;
 
         return dataResult;
     }

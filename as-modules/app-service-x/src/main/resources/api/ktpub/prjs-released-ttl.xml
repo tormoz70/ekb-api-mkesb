@@ -5,7 +5,7 @@
         multiselection="true">
     <SQL action="select">
         <text><![CDATA[
-select * from table(${ktpub_api.current.vesion}.getPrjsReleased('0', :p_subn, :p_search_query))
+select * from table(${ktpub_api.current.vesion}.getPrjsReleased('1', :p_subn, :p_search_query))
         ]]></text>
         <param type="string" name="p_subn"/>
         <param type="string" name="p_search_query"/>

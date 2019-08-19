@@ -5,23 +5,25 @@
         multiselection="true">
     <SQL action="select">
         <text><![CDATA[
-select * from table(${ktpub_api.current.vesion}.getPrjsUnoblig(:p_subn, :p_search_query))
+select * from table(${ktpub_api.current.vesion}.getPrjsUnoblig('0', :p_subn, :p_search_query))
         ]]></text>
         <param type="string" name="p_subn"/>
         <param type="string" name="p_search_query"/>
     </SQL>
     <fields>
+        <field type="integer" name="rnum$pgng" attrName="index_number"/>
         <field type="string" name="pcode" pk="true" attrName="id"/>
-        <field type="boolean" name="subn_mk"/>
-        <field type="boolean" name="subn_fk"/>
-        <field type="string" name="filmname"/>
-        <field type="string" name="studia"/>
-        <field type="string" name="startdate"/>
-        <field type="string" name="govsupp_rev" sorter="govsupp_rev_sort"/>
-        <field type="string" name="govsupp_irr" sorter="govsupp_irr_sort"/>
-        <field type="string" name="govsupp_pct" sorter="govsupp_pct_sort"/>
-        <field type="string" name="budget" sorter="budget_sort"/>
-        <field type="string" name="summ" sorter="summ_sort"/>
-        <field type="string" name="tckts" sorter="tckts_sort"/>
+        <field type="boolean" name="subn_mk" attrName="subnMK"/>
+        <field type="boolean" name="subn_fk" attrName="subnFK"/>
+        <field type="string" name="filmname" attrName="name"/>
+        <field type="string" name="prjs_count"/>
+        <field type="string" name="studias" attrName="comps"/>
+        <field type="string" name="startdate" attrName="release_date"/>
+        <field type="string" name="govsupp_rev" sorter="govsupp_rev_sort" attrName="refundable_support"/>
+        <field type="string" name="govsupp_irr" sorter="govsupp_irr_sort" attrName="nonrefundable_support"/>
+        <field type="string" name="govsupp_pct" sorter="govsupp_pct_sort" attrName="percent_support"/>
+        <field type="string" name="budget" sorter="budget_sort" attrName="budget"/>
+        <field type="string" name="summ" sorter="summ_sort" attrName="box_office"/>
+        <field type="string" name="tckts" sorter="tckts_sort" attrName="audience"/>
     </fields>
 </cursor>

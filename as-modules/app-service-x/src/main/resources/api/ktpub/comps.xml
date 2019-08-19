@@ -5,13 +5,14 @@
         multiselection="true">
     <SQL action="select">
         <text><![CDATA[
-select * from table(${ktpub_api.current.vesion}.getComps(:p_released, :p_subn, :p_search_query))
+select * from table(${ktpub_api.current.vesion}.getComps('0', :p_released, :p_subn, :p_search_query))
         ]]></text>
         <param type="string" name="p_released"/>
         <param type="string" name="p_subn"/>
         <param type="string" name="p_search_query"/>
     </SQL>
     <fields>
+        <field type="integer" name="rnum$pgng" attrName="index_number"/>
         <field type="string" name="ogrn" pk="true" attrName="id"/>
         <field type="string" name="studia" attrName="name"/>
         <field type="string" name="pcodes"/>
