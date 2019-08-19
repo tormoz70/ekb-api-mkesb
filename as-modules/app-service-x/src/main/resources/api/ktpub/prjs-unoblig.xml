@@ -5,13 +5,13 @@
         multiselection="true">
     <SQL action="select">
         <text><![CDATA[
-select * from table(${ktpub_api.current.vesion}.getPrjsReleased(:p_subn, :p_search_query))
+select * from table(${ktpub_api.current.vesion}.getPrjsUnoblig(:p_subn, :p_search_query))
         ]]></text>
         <param type="string" name="p_subn"/>
         <param type="string" name="p_search_query"/>
     </SQL>
     <fields>
-        <field type="string" name="pcode" pk="true"/>
+        <field type="string" name="pcode" pk="true" attrName="id"/>
         <field type="boolean" name="subn_mk"/>
         <field type="boolean" name="subn_fk"/>
         <field type="string" name="filmname"/>

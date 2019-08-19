@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cursor xmlns="http://bio4j.ru/biodef-repo/store"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://bio4j.ru/biodef-repo/store http://bio4j.ru/biodef-repo/store/store-v11.xsd"
+        multiselection="true">
+    <SQL action="select">
+        <text><![CDATA[
+with ddd as (
+    select distinct a.pcode as id, a.filmname as aname from GIVC_KTPUB.PUBDATA a
+    union all
+    select distinct a.ogrn as id, a.studia as aname from GIVC_KTPUB.PUBDATA a
+)
+select * from ddd a
+where lower(a.aname) like '%'||lower(:query$value)||'%'
+order by 2
+        ]]></text>
+    </SQL>
+    <fields>
+        <field type="string" name="id" pk="true"/>
+        <field type="string" name="aname" attrName="name"/>
+    </fields>
+</cursor>
