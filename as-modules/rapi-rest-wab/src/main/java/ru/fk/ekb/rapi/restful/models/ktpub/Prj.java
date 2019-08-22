@@ -22,6 +22,7 @@ public class Prj {
     public String comps;
 
     public String id;
+    public String puNumber;
     public Long index_number;
     public String name;
     public String release_date;
