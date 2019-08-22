@@ -87,12 +87,16 @@ public class APISrvcKTPub {
 
     private static void _decodeSupportId(final HttpServletRequest request) throws Exception {
         Integer supportId = RestHelper.getInstance().getBioParamFromRequest("support_id", request, Integer.class);
-        if (supportId != null && supportId == 0)
-            RestHelper.getInstance().setBioParamToRequest("p_subn", "10", request);
-        else if (supportId != null && supportId == 1)
-            RestHelper.getInstance().setBioParamToRequest("p_subn", "01", request);
-        else
+        if (supportId == null)
             RestHelper.getInstance().setBioParamToRequest("p_subn", null, request);
+        else {
+            if (supportId == 0)
+                RestHelper.getInstance().setBioParamToRequest("p_subn", "10", request);
+            else if (supportId == 1)
+                RestHelper.getInstance().setBioParamToRequest("p_subn", "01", request);
+            else
+                RestHelper.getInstance().setBioParamToRequest("p_subn", "99", request);
+        }
     }
 
     public RspPrj _getProjects(final String bioCode, final HttpServletRequest request) throws Exception {
