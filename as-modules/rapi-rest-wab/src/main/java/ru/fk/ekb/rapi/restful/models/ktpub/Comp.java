@@ -14,12 +14,12 @@ public class Comp {
     @JsonIgnore
     public String flags;
     @JsonIgnore
-    public String comps_count;
+    public Long total_companies;
 
     public String id;
     public Long index_number;
     public String name;
-    public String total_movies;
+    public Long total_movies;
     public String refundable_support;
     public String nonrefundable_support;
     public String box_office;

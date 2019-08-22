@@ -18,8 +18,8 @@ select * from table(${ktpub_api.current.vesion}.getComps('1', :p_released, :p_su
         <field type="string" name="pcodes"/>
         <field type="string" name="filmnames"/>
         <field type="string" name="flags"/>
-        <field type="string" name="comps_count"/>
-        <field type="string" name="films" sorter="films_sort" attrName="total_movies"/>
+        <field type="integer" name="comps_count"/>
+        <field type="integer" name="films_count" attrName="total_movies"/>
         <field type="string" name="govsupp_rev" sorter="govsupp_rev_sort" attrName="refundable_support"/>
         <field type="string" name="govsupp_irr" sorter="govsupp_irr_sort" attrName="nonrefundable_support"/>
         <field type="string" name="summ" sorter="summ_sort" attrName="box_office"/>

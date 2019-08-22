@@ -35,14 +35,16 @@ public class APISrvcKTPub {
     private static void _decodeSort(HttpServletRequest request, Sort.NullsPosition nullsPosition) throws Exception {
         String sortTypeParam = RestHelper.getInstance().getBioParamFromRequest("sortType", request, String.class);
         String sortParam = RestHelper.getInstance().getBioParamFromRequest("sort", request, String.class);
-        Sort sort = new Sort();
-        if(nullsPosition != null)
-            sort.setNullsPosition(nullsPosition);
-        sort.setFieldName(sortTypeParam);
-        sort.setDirection(!Strings.isNullOrEmpty(sortParam) && sortParam.trim().toLowerCase().startsWith("desc") ? Sort.Direction.DESC : Sort.Direction.ASC);
-        List<Sort> sorts = new ArrayList<>();
-        sorts.add(sort);
-        ((WrappedRequest)request).getBioQueryParams().sort = sorts;
+        if(!Strings.isNullOrEmpty(sortTypeParam) && !Strings.isNullOrEmpty(sortParam)) {
+            Sort sort = new Sort();
+            if (nullsPosition != null)
+                sort.setNullsPosition(nullsPosition);
+            sort.setFieldName(sortTypeParam);
+            sort.setDirection(!Strings.isNullOrEmpty(sortParam) && sortParam.trim().toLowerCase().startsWith("desc") ? Sort.Direction.DESC : Sort.Direction.ASC);
+            List<Sort> sorts = new ArrayList<>();
+            sorts.add(sort);
+            ((WrappedRequest) request).getBioQueryParams().sort = sorts;
+        }
     }
 
     private static void _replaceBioParam(HttpServletRequest request, String newParamName, String oldParamName, Object newParamValue) throws Exception {
@@ -118,7 +120,7 @@ public class APISrvcKTPub {
         for (Prj prj : dataResult.movies) {
             try {
                 prj.companies = new ArrayList<>();
-                String[] compList = Strings.split(prj.comps, "|-|");
+                String[] compList = Strings.split(prj.compList, "|-|");
                 for (String compItem : compList) {
                     PrjComp pc = new PrjComp();
                     pc.id = compItem.substring(1, compItem.indexOf("]"));
@@ -133,7 +135,8 @@ public class APISrvcKTPub {
         }
 
         Prj totals = RestHelper.getInstance().getFirst(bioCode+"-ttl", request, Prj.class);
-        dataResult.total_movies = totals.prjs_count;
+        dataResult.total_movies = totals.total_movies;
+        dataResult.total_companies = totals.total_companies;
         dataResult.total_refundable_support = totals.refundable_support;
         dataResult.total_nonrefundable_support = totals.nonrefundable_support;
         dataResult.total_budget = totals.budget;
@@ -214,7 +217,8 @@ public class APISrvcKTPub {
         }
 
         Comp totals = RestHelper.getInstance().getFirst(bioCode+"-ttl", request, Comp.class);
-        dataResult.total_companies = totals.comps_count;
+        dataResult.total_movies = totals.total_movies;
+        dataResult.total_companies = totals.total_companies;
         dataResult.total_refundable_support = totals.refundable_support;
         dataResult.total_nonrefundable_support = totals.nonrefundable_support;
         dataResult.total_box_office = totals.box_office;

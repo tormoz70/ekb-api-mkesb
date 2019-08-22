@@ -17,8 +17,9 @@ select * from table(${ktpub_api.current.vesion}.getPrjsUnoblig('1', :p_subn, :p_
         <field type="boolean" name="subn_mk" attrName="subnMK"/>
         <field type="boolean" name="subn_fk" attrName="subnFK"/>
         <field type="string" name="filmname" attrName="name"/>
-        <field type="string" name="prjs_count"/>
-        <field type="string" name="studias" attrName="comps"/>
+        <field type="integer" name="prjs_count" attrName="total_movies"/>
+        <field type="integer" name="comps_count" attrName="total_companies"/>
+        <field type="string" name="studias" attrName="compList"/>
         <field type="string" name="startdate" attrName="release_date"/>
         <field type="string" name="govsupp_rev" attrName="refundable_support"/>
         <field type="string" name="govsupp_irr" attrName="nonrefundable_support"/>

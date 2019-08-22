@@ -17,10 +17,11 @@ public class Prj {
     @JsonIgnore
     public Boolean subnFK;
     @JsonIgnore
-    public String prjs_count;
+    public String compList;
     @JsonIgnore
-    public String comps;
+    public Long total_movies;
 
+    public Long total_companies;
     public String id;
     public String puNumber;
     public Long index_number;

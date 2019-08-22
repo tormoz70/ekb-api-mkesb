@@ -4,7 +4,8 @@ import java.util.List;
 
 public class RspPrj {
     public List<Prj> movies;
-    public String total_movies;
+    public Long total_movies;
+    public Long total_companies;
     public String total_refundable_support;
     public String total_nonrefundable_support;
     public String total_budget;
