@@ -191,6 +191,7 @@ public class APISrvcKTPub {
                     fsrc.id = 0;
                     fsrc.name = "Министерство культуры";
                     fsrc.short_name = "МК";
+                    fsrc.image = "http://resources.fond-kino.ru/eais/images/big/financing_source_00.png";
                     pc.financing_source.add(fsrc);
                 }
                 if(subnFK){
@@ -198,6 +199,7 @@ public class APISrvcKTPub {
                     fsrc.id = 1;
                     fsrc.name = "Фонд кино";
                     fsrc.short_name = "ФК";
+                    fsrc.image = "http://resources.fond-kino.ru/eais/images/big/financing_source_01.png";
                     pc.financing_source.add(fsrc);
                 }
                 comp.movies.add(pc);

@@ -9,4 +9,5 @@ public class FSrc {
     public Integer id;
     public String name;
     public String short_name;
+    public String image;
 }
