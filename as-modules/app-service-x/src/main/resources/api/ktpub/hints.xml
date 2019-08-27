@@ -4,16 +4,11 @@
         xsi:schemaLocation="http://bio4j.ru/biodef-repo/store http://bio4j.ru/biodef-repo/store/store-v11.xsd"
         multiselection="true">
     <SQL action="select">
-        <text><![CDATA[
-with ddd as (
-    select distinct a.pcode as id, a.filmname as aname from GIVC_KTPUB.PUBDATA a
-    union all
-    select distinct a.ogrn as id, a.studia as aname from GIVC_KTPUB.PUBDATA a
-)
-select * from ddd a
-where lower(a.aname) like '%'||lower(:query$value)||'%'
-order by 2
-        ]]></text>
+        <text><![CDATA[select * from table(${ktpub_api.current.vesion}.getHints(:p_released, :p_unoblig, :p_subn, :query$value))]]></text>
+        <param type="string" name="p_released"/>
+        <param type="string" name="p_unoblig"/>
+        <param type="string" name="p_subn"/>
+        <param type="string" name="query$value"/>
     </SQL>
     <fields>
         <field type="string" name="id" pk="true"/>

@@ -13,7 +13,7 @@
 
     <properties>
         <mkesbapi.current.vesion>MKESB_API04_DEV</mkesbapi.current.vesion>
-        <ktpub_api.current.vesion>KTPUB_API03</ktpub_api.current.vesion>
+        <ktpub_api.current.vesion>KTPUB_API04</ktpub_api.current.vesion>
     </properties>
 
     <build>

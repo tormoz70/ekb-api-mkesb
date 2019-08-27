@@ -101,6 +101,16 @@ public class APISrvcKTPub {
         }
     }
 
+    private static void _decodeReleaseStatus(final HttpServletRequest request) throws Exception {
+        Integer releaseStatus = RestHelper.getInstance().getBioParamFromRequest("release_status", request, Integer.class);
+        if (releaseStatus != null && releaseStatus == 1)
+            RestHelper.getInstance().setBioParamToRequest("p_released", "1", request);
+        else if (releaseStatus != null && releaseStatus == 2)
+            RestHelper.getInstance().setBioParamToRequest("p_released", "0", request);
+        else
+            RestHelper.getInstance().setBioParamToRequest("p_released", null, request);
+    }
+
     public RspPrj _getProjects(final String bioCode, final HttpServletRequest request) throws Exception {
         WrappedRequest req = ((WrappedRequest) request);
         boolean forceAll = Strings.isNullOrEmpty(req.getBioQueryParams().pageSizeOrig);
@@ -162,14 +172,7 @@ public class APISrvcKTPub {
         _decodeSort(request, Sort.NullsPosition.DEFAULT);
         final String bioCode = "api.ktpub.comps";
 
-        Integer releaseStatus = RestHelper.getInstance().getBioParamFromRequest("release_status", request, Integer.class);
-        if (releaseStatus != null && releaseStatus == 1)
-            RestHelper.getInstance().setBioParamToRequest("p_released", "1", request);
-        else if (releaseStatus != null && releaseStatus == 2)
-            RestHelper.getInstance().setBioParamToRequest("p_released", "0", request);
-        else
-            RestHelper.getInstance().setBioParamToRequest("p_released", null, request);
-
+        _decodeReleaseStatus(request);
         _decodeSupportId(request);
 
 
@@ -246,6 +249,23 @@ public class APISrvcKTPub {
     @Produces(MediaType.APPLICATION_JSON)
     public RspHint getHints(@Context HttpServletRequest request) throws Exception {
         WrappedRequest req = ((WrappedRequest)request);
+        //hintType = 1-рейтиг фильмов, 2-рейтинг  компаний, 3-в производстве, 4-неисполненные обязательства
+        int hintType = req.getBioQueryParam("hintType", int.class, 1);
+        if(hintType == 1) {
+            RestHelper.getInstance().setBioParamToRequest("p_released", "1", request);
+            RestHelper.getInstance().setBioParamToRequest("p_unoblig", null, request);
+        } else if(hintType == 2) {
+            _decodeReleaseStatus(request);
+            RestHelper.getInstance().setBioParamToRequest("p_unoblig", null, request);
+        } else if(hintType == 3) {
+            RestHelper.getInstance().setBioParamToRequest("p_released", "0", request);
+            RestHelper.getInstance().setBioParamToRequest("p_unoblig", null, request);
+        } else if(hintType == 4) {
+            RestHelper.getInstance().setBioParamToRequest("p_released", null, request);
+            RestHelper.getInstance().setBioParamToRequest("p_unoblig", "1", request);
+        }
+
+        _decodeSupportId(request);
         final String bioCode = "api.ktpub.hints";
         RspHint dataResult = new RspHint();
         dataResult.response = RestHelper.getInstance().getListAll(bioCode, request, Hint.class);
