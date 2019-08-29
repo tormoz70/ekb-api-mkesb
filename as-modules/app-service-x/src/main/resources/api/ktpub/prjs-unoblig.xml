@@ -31,6 +31,6 @@ select * from table(${ktpub_api.current.vesion}.getPrjsUnoblig('0', :p_subn, :p_
         <field type="string" name="tckts" sorter="tckts_sort" attrName="audience"/>
     </fields>
     <defaultSort>
-        <field name="release_date" direction="DESC"></field>
+        <field name="govsupp_sort" direction="DESC"></field>
     </defaultSort>
 </cursor>
