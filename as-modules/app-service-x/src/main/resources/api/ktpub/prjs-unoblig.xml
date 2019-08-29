@@ -25,7 +25,7 @@ select * from table(${ktpub_api.current.vesion}.getPrjsUnoblig('0', :p_subn, :p_
         <field type="string" name="govsupp_rev" sorter="govsupp_rev_sort" attrName="refundable_support"/>
         <field type="string" name="govsupp_irr" sorter="govsupp_irr_sort" attrName="nonrefundable_support"/>
         <field type="string" name="govsupp_pct" sorter="govsupp_pct_sort" attrName="percent_support"/>
-        <field type="decimal" name="govsupp_sort"/>
+        <field type="decimal" name="govsupp_sort" attrName="total_support"/>
         <field type="string" name="budget" sorter="budget_sort" attrName="budget"/>
         <field type="string" name="summ" sorter="summ_sort" attrName="box_office"/>
         <field type="string" name="tckts" sorter="tckts_sort" attrName="audience"/>
