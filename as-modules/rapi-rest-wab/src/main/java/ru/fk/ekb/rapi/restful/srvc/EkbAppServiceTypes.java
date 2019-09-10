@@ -1,10 +1,6 @@
 package ru.fk.ekb.rapi.restful.srvc;
 
-import ru.bio4j.ng.service.api.AppService;
-import ru.bio4j.ng.service.api.CacheService;
-import ru.bio4j.ng.service.api.FCloudApi;
-import ru.bio4j.ng.service.api.SecurityService;
-import ru.bio4j.ng.service.types.AppServiceTypeGetters;
+import ru.bio4j.ng.service.api.*;
 import ru.fk.ekb.module.impl.EkbAppModule;
 
 public class EkbAppServiceTypes implements AppServiceTypeGetters {

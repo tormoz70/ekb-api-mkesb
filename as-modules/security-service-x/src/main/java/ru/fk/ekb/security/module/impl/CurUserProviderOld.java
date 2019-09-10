@@ -17,12 +17,12 @@ import java.util.Map;
 
 import static ru.bio4j.ng.commons.utils.Strings.isNullOrEmpty;
 
-public class CurUserProvider {
-    private static final Logger LOG = LoggerFactory.getLogger(CurUserProvider.class);
+public class CurUserProviderOld {
+    private static final Logger LOG = LoggerFactory.getLogger(CurUserProviderOld.class);
 
-    private final SecurityModuleImpl module;
+    private final SecurityModuleImplOld module;
 
-    public CurUserProvider(SecurityModuleImpl module){
+    public CurUserProviderOld(SecurityModuleImplOld module){
         this.module = module;
     }
 
