@@ -3,7 +3,7 @@ package ru.fk.ekb.rapi.restful.models.ktpub;
 import com.fasterxml.jackson.annotation.JacksonAnnotation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import flexjson.JSON;
+//import flexjson.JSON;
 import ru.bio4j.ng.model.transport.ABean;
 import ru.bio4j.ng.model.transport.Prop;
 import ru.fk.ekb.rapi.restful.srvc.DoubleContextualSerializer;

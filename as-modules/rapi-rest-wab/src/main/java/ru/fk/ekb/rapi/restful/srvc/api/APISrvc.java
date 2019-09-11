@@ -4,7 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.commons.converter.DateTimeParser;
 import ru.bio4j.ng.commons.types.Paramus;
-import ru.bio4j.ng.commons.utils.Jsons;
+//import ru.bio4j.ng.commons.utils.Jsons;
+import ru.bio4j.ng.commons.utils.Jecksons;
 import ru.bio4j.ng.commons.utils.Strings;
 import ru.bio4j.ng.database.api.SQLContext;
 import ru.bio4j.ng.database.api.SQLDefinition;
@@ -49,7 +50,7 @@ public class APISrvc {
         BioQueryParams queryParams = ((WrappedRequest)request).getBioQueryParams();
         if(!Strings.isNullOrEmpty(queryParams.jsonData)) {
             try {
-                requestRegionStat = Jsons.decode(queryParams.jsonData, RequestRegionStat.class);
+                requestRegionStat = Jecksons.getInstance().decode(queryParams.jsonData, RequestRegionStat.class);
             } catch (Exception e) {
                 LOG.error(String.format("Ошибка при получении Json-параметров запроса: %s", queryParams.jsonData), e);
             }
@@ -79,7 +80,7 @@ public class APISrvc {
         String prmsJson = ((WrappedRequest)request).getBioQueryParams().jsonData;
         KTCompParams params = null;
         if(!Strings.isNullOrEmpty(prmsJson))
-            params = Jsons.decode(prmsJson, KTCompParams.class);
+            params = Jecksons.getInstance().decode(prmsJson, KTCompParams.class);
         if(params != null) {
             final AppService appService = RestHelper.getInstance().getAppService();
             List<KTCompStat> rslt = RestHelper.getInstance().execBatch((SQLContext ctx, KTCompParams prms) -> {
@@ -102,7 +103,7 @@ public class APISrvc {
         String prmsJson = ((WrappedRequest)request).getBioQueryParams().jsonData;
         KTFilmParams params = null;
         if(!Strings.isNullOrEmpty(prmsJson))
-            params = Jsons.decode(prmsJson, KTFilmParams.class);
+            params = Jecksons.getInstance().decode(prmsJson, KTFilmParams.class);
         if(params != null) {
             final AppService appService = RestHelper.getInstance().getAppService();
             List<KTFilmStat> rslt = RestHelper.getInstance().execBatch((SQLContext ctx, KTFilmParams prms) -> {
