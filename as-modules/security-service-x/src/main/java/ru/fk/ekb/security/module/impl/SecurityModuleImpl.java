@@ -12,9 +12,9 @@ import ru.bio4j.ng.database.api.SQLDefinition;
 import ru.bio4j.ng.database.api.SQLStoredProc;
 import ru.bio4j.ng.database.oracle.SQLContextFactory;
 import ru.bio4j.ng.model.transport.*;
-import ru.bio4j.ng.service.api.*;
+import ru.bio4j.ng.service.api.DbConfigProvider;
+import ru.bio4j.ng.service.api.SecurityService;
 import ru.bio4j.ng.service.types.SecurityServiceBase;
-import ru.bio4j.ng.service.types.SsoClient;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,20 +29,18 @@ import static ru.bio4j.ng.commons.utils.Strings.isNullOrEmpty;
 public class SecurityModuleImpl extends SecurityServiceBase implements SecurityService {
     private static final Logger LOG = LoggerFactory.getLogger(SecurityModuleImpl.class);
 
-    private volatile SsoClient ssoClient;
+    private CurUserProvider curUserProvider;
 
-    private synchronized void initSsoClient() {
-        if(ssoClient == null)
-            ssoClient = SsoClient.create("http://localhost:8099/sso");
-    }
-
-    private SsoClient getSsoClient() {
-        initSsoClient();
-        return ssoClient;
+    private CurUserProvider getCurUserProvider() {
+        if(curUserProvider == null)
+            curUserProvider = new CurUserProvider(this);
+        return curUserProvider;
     }
 
     @Requires
     private EventAdmin eventAdmin;
+    @Requires
+    private DbConfigProvider dbConfigProvider;
 
     @Override
     protected EventAdmin getEventAdmin() {
@@ -62,34 +60,111 @@ public class SecurityModuleImpl extends SecurityServiceBase implements SecurityS
         return bundleContext;
     }
 
-    @Override
     protected SQLContext createSQLContext() throws Exception {
-        return null;
+        SQLContextConfig config = dbConfigProvider.getConfig();
+        return SQLContextFactory.create(config);
     }
 
     @Override
     public User login(final BioQueryParams qprms) throws Exception {
-        return getSsoClient().login(qprms);
-    }
+        final String login = qprms.login;
+        final String remoteIP = qprms.remoteIP;
+        final String remoteClient = qprms.remoteClient;
+        if (isNullOrEmpty(login))
+            throw new BioError.Login.Unauthorized();
+        LOG.debug("User {} logging in...", login);
 
-    @Override
-    public User getUser(final BioQueryParams qprms) throws Exception {
-        return getSsoClient().curUser(qprms);
+        final SQLDefinition sqlDefinition = this.getSQLDefinition("bio.login");
+        final SQLContext context = this.getSQLContext();
+        try {
+            final List<Param> params = new ArrayList<Param>();
+            params.add(Param.builder().name("p_login").value(login).build());
+            params.add(Param.builder().name("p_remote_ip").value(remoteIP).build());
+            params.add(Param.builder().name("p_remote_client").value(remoteClient).build());
+            params.add(Param.builder().name("v_stoken").type(MetaType.STRING).direction(Param.Direction.OUT).build());
+            qprms.stoken = context.execBatch((ctx) -> {
+                SQLStoredProc prc = ctx.createStoredProc();
+                prc.init(ctx.getCurrentConnection(), sqlDefinition.getExecSqlDef().getPreparedSql(), sqlDefinition.getExecSqlDef().getParamDeclaration()).execSQL(params, ctx.getCurrentUser());
+                return Paramus.paramValue(params, "v_stoken", String.class, null);
+            }, null);
+
+
+            return getUser(qprms);
+        } catch (SQLException ex) {
+            switch (ex.getErrorCode()) {
+                case 20401:
+                    throw new BioError.Login.Unauthorized();
+                case 20402:
+                    throw new BioError.Login.Unauthorized();
+                case 20403:
+                    throw new BioError.Login.Unauthorized();
+                case 20404:
+                    throw new BioError.Login.Unauthorized();
+                default:
+                    throw ex;
+            }
+        }
     }
 
     @Override
     public User restoreUser(String stokenOrUsrUid) throws Exception {
-        return getSsoClient().restoreUser(stokenOrUsrUid, null, null);
+        return getCurUserProvider().loadUserFromDB(stokenOrUsrUid);
+    }
+
+    public User getUser(final BioQueryParams qprms) throws Exception {
+        final String stoken = qprms.stoken;
+        final String remoteIP = qprms.remoteIP;
+        final String remoteClient = qprms.remoteClient;
+        Boolean isLoggedin = loggedin(qprms);
+        if(isLoggedin)
+            return getCurUserProvider().getUser(stoken, remoteIP, remoteClient);
+        throw new BioError.Login.Unauthorized();
     }
 
     @Override
     public void logoff(final BioQueryParams qprms) throws Exception {
-        getSsoClient().logoff(qprms);
+        final String remoteIP = qprms.remoteIP;
+        final String stoken = qprms.stoken;
+        final SQLDefinition sqlDefinition = this.getSQLDefinition("bio.logoff");
+        final SQLContext context = this.getSQLContext();
+
+        String rslt = context.execBatch((ctx) -> {
+            List<Param> prms = new ArrayList<>();
+            Paramus.setParamValue(prms, "p_stoken", stoken);
+            Paramus.setParamValue(prms, "p_remote_ip", remoteIP);
+            SQLStoredProc sp = ctx.createStoredProc();
+            sp.init(ctx.getCurrentConnection(), sqlDefinition.getExecSqlDef().getPreparedSql(), sqlDefinition.getExecSqlDef().getParamDeclaration())
+                    .execSQL(prms, ctx.getCurrentUser());
+            try (Paramus paramus = Paramus.set(prms)) {
+                return paramus.getValueAsStringByName("v_rslt", true);
+            }
+        }, null);
+
+        LOG.debug("Logoff rslt: {}", rslt);
     }
 
     @Override
     public Boolean loggedin(final BioQueryParams qprms) throws Exception {
-        return getSsoClient().loggedin(qprms);
+        final String stoken = qprms.stoken;
+        final String remoteIP = qprms.remoteIP;
+        final String remoteClient = qprms.remoteClient;
+        if (isNullOrEmpty(stoken))
+            throw new BioError.Login.Unauthorized();
+        final SQLDefinition sqlDefinition = this.getSQLDefinition("bio.loggedin");
+        final SQLContext context = this.getSQLContext();
+
+        String rslt = context.execBatch((ctx) -> {
+            List<Param> prms = new ArrayList<>();
+            Paramus.setParamValue(prms, "p_stoken", stoken);
+            Paramus.setParamValue(prms, "p_remote_ip", remoteIP);
+            Paramus.setParamValue(prms, "p_remote_client", remoteClient);
+            SQLStoredProc sp = ctx.createStoredProc();
+            sp.init(ctx.getCurrentConnection(), sqlDefinition.getExecSqlDef().getPreparedSql(), sqlDefinition.getExecSqlDef().getParamDeclaration())
+                    .execSQL(prms, null);
+            return Paramus.paramValue(prms, "v_rslt", String.class, null);
+        }, null);
+        LOG.debug("Loggedin rslt: {}", rslt);
+        return Strings.compare(rslt, "OK", true);
     }
 
 
