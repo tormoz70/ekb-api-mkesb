@@ -166,6 +166,22 @@ public class APISrvcKTPub {
         RestHelper.getInstance().setBioParamToRequest("puNumber", puNumber, request);
         RspPrj rslt = new RspPrj();
         rslt.movies = RestHelper.getInstance().getListAll("api.ktpub.prj-released", request, Prj.class);
+        for (Prj prj : rslt.movies) {
+            try {
+                prj.companies = new ArrayList<>();
+                String[] compList = Strings.split(prj.compList, "|-|");
+                for (String compItem : compList) {
+                    PrjComp pc = new PrjComp();
+                    pc.id = compItem.substring(1, compItem.indexOf("]"));
+                    pc.name = compItem.substring(compItem.indexOf("]") + 2);
+                    prj.companies.add(pc);
+                }
+                _decodeFinancingSource(prj);
+            } catch (Exception e) {
+                throw new Exception(String.format("Error on processing prg: %s(%s)", prj.id, prj.name), e);
+            }
+
+        }
         return rslt;
     }
 
