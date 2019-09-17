@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cursor xmlns="http://bio4j.ru/biodef-repo/store"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://bio4j.ru/biodef-repo/store http://bio4j.ru/biodef-repo/store/store-v11.xsd"
+        multiselection="true">
+    <SQL action="select">
+        <text><![CDATA[
+select * from table(${ktpub_api.current.vesion}.getPrjReleased(:p_puNumber))
+        ]]></text>
+        <param type="string" name="p_puNumber"/>
+    </SQL>
+    <fields>
+        <field type="integer" name="rnum$pgng" attrName="index_number"/>
+        <field type="string" name="pcode" pk="true" attrName="id"/>
+        <field type="string" name="puNumber"/>
+        <field type="boolean" name="subn_mk" attrName="subnMK"/>
+        <field type="boolean" name="subn_fk" attrName="subnFK"/>
+        <field type="string" name="filmname" attrName="name" sorter="filmname_sort"/>
+        <field type="integer" name="prjs_count" attrName="total_movies"/>
+        <field type="integer" name="comps_count" attrName="total_companies"/>
+        <field type="string" name="studias" attrName="compList"/>
+        <field type="string" name="companies_sort" attrName="company"/>
+        <field type="string" name="startdate" attrName="release_date" sorter="startdate_sort"/>
+        <field type="string" name="govsupp_rev" sorter="govsupp_rev_sort" attrName="refundable_support"/>
+        <field type="string" name="govsupp_irr" sorter="govsupp_irr_sort" attrName="nonrefundable_support"/>
+        <field type="string" name="govsupp_pct" sorter="govsupp_pct_sort" attrName="percent_support"/>
+        <field type="decimal" name="govsupp_sort" attrName="total_support"/>
+        <field type="string" name="budget" sorter="budget_sort" attrName="budget"/>
+        <field type="string" name="summ" sorter="summ_sort" attrName="box_office"/>
+        <field type="string" name="tckts" sorter="tckts_sort" attrName="audience"/>
+    </fields>
+    <defaultSort>
+        <field name="govsupp_sort" direction="DESC"></field>
+    </defaultSort>
+</cursor>

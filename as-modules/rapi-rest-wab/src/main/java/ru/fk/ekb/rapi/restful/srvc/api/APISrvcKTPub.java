@@ -19,10 +19,7 @@ import ru.fk.ekb.rapi.restful.models.*;
 import ru.fk.ekb.rapi.restful.models.ktpub.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -115,7 +112,6 @@ public class APISrvcKTPub {
         WrappedRequest req = ((WrappedRequest) request);
         boolean forceAll = Strings.isNullOrEmpty(req.getBioQueryParams().pageSizeOrig);
         _decodeSort(request, Sort.NullsPosition.DEFAULT);
-
         _decodeSupportId(request);
 
         List<Prj> aBeanPage;
@@ -161,6 +157,16 @@ public class APISrvcKTPub {
     @Produces(MediaType.APPLICATION_JSON)
     public RspPrj getMovies(@Context HttpServletRequest request) throws Exception {
         return _getProjects("api.ktpub.prjs-released", request);
+    }
+
+    @GET
+    @Path("/rating/movies/{puNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RspPrj getMovies(@PathParam("puNumber") String puNumber, @Context HttpServletRequest request) throws Exception {
+        RestHelper.getInstance().setBioParamToRequest("puNumber", puNumber, request);
+        RspPrj rslt = new RspPrj();
+        rslt.movies = RestHelper.getInstance().getListAll("api.ktpub.prj-released", request, Prj.class);
+        return rslt;
     }
 
     @GET
