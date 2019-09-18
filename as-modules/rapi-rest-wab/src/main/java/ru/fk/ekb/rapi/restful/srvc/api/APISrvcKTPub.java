@@ -152,17 +152,7 @@ public class APISrvcKTPub {
         return dataResult;
     }
 
-    @GET
-    @Path("/rating/movies")
-    @Produces(MediaType.APPLICATION_JSON)
-    public RspPrj getMovies(@Context HttpServletRequest request) throws Exception {
-        return _getProjects("api.ktpub.prjs-released", request);
-    }
-
-    @GET
-    @Path("/rating/movies/{puNumber}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public RspPrj getMovies(@PathParam("puNumber") String puNumber, @Context HttpServletRequest request) throws Exception {
+    public RspPrj getMovie(String puNumber, HttpServletRequest request) throws Exception {
         RestHelper.getInstance().setBioParamToRequest("puNumber", puNumber, request);
         RspPrj rslt = new RspPrj();
         rslt.movies = RestHelper.getInstance().getListAll("api.ktpub.prj-released", request, Prj.class);
@@ -184,6 +174,17 @@ public class APISrvcKTPub {
         }
         return rslt;
     }
+
+    @GET
+    @Path("/rating/movies")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RspPrj getMovies(@Context HttpServletRequest request) throws Exception {
+        String puNum = RestHelper.getInstance().getBioParamFromRequest("puNumber", request, String.class);
+        if(!Strings.isNullOrEmpty(puNum))
+            return getMovie(puNum, request);
+        return _getProjects("api.ktpub.prjs-released", request);
+    }
+
 
     @GET
     @Path("/rating/companies")
