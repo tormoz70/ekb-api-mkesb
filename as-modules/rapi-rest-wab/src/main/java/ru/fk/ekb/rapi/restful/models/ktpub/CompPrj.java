@@ -8,6 +8,7 @@ import java.util.List;
 
 public class CompPrj {
     public String id;
+    public String puNumber;
     public String name;
     public List<FSrc> financing_source;
 }

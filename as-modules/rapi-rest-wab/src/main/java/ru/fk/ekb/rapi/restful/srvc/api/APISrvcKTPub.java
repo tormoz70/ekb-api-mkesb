@@ -214,9 +214,11 @@ public class APISrvcKTPub {
             String[] pcodesList = comp.pcodes.length() > 0 ? Strings.split(comp.pcodes.substring(0, comp.pcodes.length()-2), "|-|") : new String[0];
             String[] filmnamesList = comp.filmnames.length() > 0 ? Strings.split(comp.filmnames.substring(0, comp.filmnames.length()-2), "|-|") : new String[0];
             String[] flagsList = comp.flags.length() > 0 ? Strings.split(comp.flags.substring(0, comp.flags.length()-2), "|-|") : new String[0];
+            String[] pusList = comp.pus.length() > 0 ? Strings.split(comp.pus.substring(0, comp.pus.length()-2), "|-|") : new String[0];
             for(int i=0; i<pcodesList.length; i++) {
                 CompPrj pc = new CompPrj();
                 pc.id = pcodesList[i];
+                pc.puNumber = (!Strings.isNullOrEmpty(pusList[i]) && !pusList[i].equals("*")) ? pusList[i] : null;
                 pc.name = filmnamesList[i];
                 pc.financing_source = new ArrayList<>();
                 boolean subnMK = flagsList[i].charAt(0) == '1';

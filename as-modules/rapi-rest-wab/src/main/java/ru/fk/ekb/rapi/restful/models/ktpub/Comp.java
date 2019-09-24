@@ -14,6 +14,8 @@ public class Comp {
     @JsonIgnore
     public String flags;
     @JsonIgnore
+    public String pus;
+    @JsonIgnore
     public Long total_companies;
 
     public String id;
