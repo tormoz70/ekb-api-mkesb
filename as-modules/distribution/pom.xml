@@ -46,8 +46,18 @@
                                 <!-- Jetty Distribution -->
                                 <artifactItem>
                                     <groupId>ru.bio4j.ng</groupId>
-                                    <artifactId>jetty-osgi-boot</artifactId>
+                                    <artifactId>bio4j-ng-jetty-osgi-boot</artifactId>
                                     <version>${bio4j-ng.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${distr.bundles}</outputDirectory>
+                                </artifactItem>
+
+                                <!-- sso Distribution -->
+                                <artifactItem>
+                                    <groupId>ru.bio4j.ng</groupId>
+                                    <version>${bio4j-ng.version}</version>
+                                    <artifactId>bio4j-ng-sso-client</artifactId>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${distr.bundles}</outputDirectory>
@@ -61,15 +71,6 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${distr.modules}</outputDirectory>
-                                </artifactItem>
-
-                                <artifactItem>
-                                    <groupId>ru.bio4j.ng</groupId>
-                                    <version>${bio4j-ng.version}</version>
-                                    <artifactId>bio4j-ng-sso-client</artifactId>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${distr.bundles}</outputDirectory>
                                 </artifactItem>
 
                                 <artifactItem>
