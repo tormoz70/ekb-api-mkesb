@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.database.api.SQLContext;
 import ru.bio4j.ng.database.oracle.SQLContextFactory;
 import ru.bio4j.ng.model.transport.SQLContextConfig;
-import ru.bio4j.ng.service.api.AppService;
-import ru.bio4j.ng.service.api.HttpParamMap;
 import ru.bio4j.ng.service.api.DbConfigProvider;
 import ru.bio4j.ng.service.types.AppServiceBase;
 
@@ -39,7 +37,7 @@ public class ApplicationImpl extends AppServiceBase implements EkbAppModule {
     }
 
     @Override
-    protected SQLContext createSQLContext() throws Exception {
+    protected SQLContext createSQLContext() {
         SQLContextConfig cfg = dbConfigProvider.getConfig();
         SQLContext context = SQLContextFactory.create(cfg);
 /*

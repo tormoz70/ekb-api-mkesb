@@ -1,29 +1,23 @@
 package ru.fk.ekb.rapi.restful.srvc.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.bio4j.ng.commons.types.Paramus;
-//import ru.bio4j.ng.commons.utils.Jsons;
 import ru.bio4j.ng.commons.utils.Strings;
-import ru.bio4j.ng.database.api.SQLContext;
-import ru.bio4j.ng.database.api.SQLDefinition;
-import ru.bio4j.ng.model.transport.BioQueryParams;
 import ru.bio4j.ng.model.transport.Param;
-import ru.bio4j.ng.model.transport.User;
 import ru.bio4j.ng.model.transport.jstore.Sort;
-import ru.bio4j.ng.service.api.AppService;
-import ru.bio4j.ng.service.types.RestApiAdapter;
 import ru.bio4j.ng.service.types.RestHelper;
 import ru.bio4j.ng.service.types.WrappedRequest;
-import ru.fk.ekb.rapi.restful.models.*;
 import ru.fk.ekb.rapi.restful.models.ktpub.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
+
+//import ru.bio4j.ng.commons.utils.Jsons;
 
 @Path("/ktpub-api")
 public class APISrvcKTPub {

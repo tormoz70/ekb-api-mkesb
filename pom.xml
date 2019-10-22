@@ -4,11 +4,11 @@
     <parent>
         <groupId>ru.bio4j.ng</groupId>
         <artifactId>bio4j-ng-framework</artifactId>
-        <version>2.1.0-SNAPSHOT</version>
+        <version>2.5.0-SNAPSHOT</version>
     </parent>
 
 	<artifactId>bio4j-ng-server</artifactId>
-	<version>2.0.0</version>
+	<version>2.5.0</version>
     <packaging>pom</packaging>
 
 	<description>App server</description>
@@ -24,9 +24,13 @@
         <distr.deploy>../${distr.deploy0}</distr.deploy>
         <distr.clean>${distr.deploy0}</distr.clean>
 
-        <bio-debug>false</bio-debug>
+        <bio-service-odac>ru.fk.ekb.module.impl.EkbAppModule</bio-service-odac>
+        <!--<bio-service-fcloud>ru.bio4j.ng.service.api.FCloudApi</bio-service-fcloud>-->
+        <!--<bio-service-security>ru.bio4j.ng.service.api.SecurityService</bio-service-security>-->
+        <!--<bio-service-cache>ru.bio4j.ng.service.api.CacheService</bio-service-cache>-->
 
-        <bio-error-handler>json</bio-error-handler>
+        <sso-servive-url>http://192.168.70.51:8089</sso-servive-url>
+
         <jetty-http-port>8083</jetty-http-port>
         <remote-debugger-port>9092</remote-debugger-port>
         <jmx-port>1104</jmx-port>

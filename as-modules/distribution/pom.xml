@@ -4,7 +4,7 @@
     <parent>
         <groupId>ru.fk.ekb</groupId>
         <artifactId>as-modules</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.5.0-SNAPSHOT</version>
     </parent>
     <artifactId>distribution</artifactId>
     <packaging>pom</packaging>
@@ -24,6 +24,25 @@
                         </goals>
                         <configuration>
                             <artifactItems>
+
+                                <!-- Oracle Connection-->
+                                <artifactItem>
+                                    <groupId>ru.bio4j.ng</groupId>
+                                    <artifactId>bio4j-ng-dba-oracle</artifactId>
+                                    <version>${bio4j-ng.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${distr.bundles}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.oracle</groupId>
+                                    <artifactId>bio4j-ng-ojdbc8-osgi</artifactId>
+                                    <version>${ojdbc.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${distr.bundles}</outputDirectory>
+                                </artifactItem>
+
                                 <!-- Jetty Distribution -->
                                 <artifactItem>
                                     <groupId>ru.bio4j.ng</groupId>
@@ -45,13 +64,14 @@
                                 </artifactItem>
 
                                 <artifactItem>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>fk-ekb-security-service-x</artifactId>
-                                    <version>${project.version}</version>
+                                    <groupId>ru.bio4j.ng</groupId>
+                                    <version>${bio4j-ng.version}</version>
+                                    <artifactId>bio4j-ng-sso-client</artifactId>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${distr.modules}</outputDirectory>
+                                    <outputDirectory>${distr.bundles}</outputDirectory>
                                 </artifactItem>
+
                                 <artifactItem>
                                     <groupId>${project.groupId}</groupId>
                                     <artifactId>fk-ekb-rapi-restful-wab</artifactId>
