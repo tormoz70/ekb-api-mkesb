@@ -29,8 +29,6 @@
         <!--<bio-service-security>ru.bio4j.ng.service.api.SecurityService</bio-service-security>-->
         <!--<bio-service-cache>ru.bio4j.ng.service.api.CacheService</bio-service-cache>-->
 
-        <sso-servive-url>http://192.168.70.51:8089</sso-servive-url>
-
         <jetty-http-port>8083</jetty-http-port>
         <remote-debugger-port>9092</remote-debugger-port>
         <jmx-port>1104</jmx-port>
@@ -59,6 +57,7 @@
             <properties>
                 <log4j.bio4j.level>DEBUG</log4j.bio4j.level>
                 <log4j.app.level>DEBUG</log4j.app.level>
+                <sso-servive-url>http://localhost:8089</sso-servive-url>
             </properties>
         </profile>
         <profile>
@@ -69,6 +68,7 @@
             <properties>
                 <log4j.bio4j.level>INFO</log4j.bio4j.level>
                 <log4j.app.level>INFO</log4j.app.level>
+                <sso-servive-url>http://192.168.70.51:8089</sso-servive-url>
             </properties>
         </profile>
     </profiles>
