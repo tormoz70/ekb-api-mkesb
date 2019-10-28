@@ -33,9 +33,9 @@ pipeline {
 		
 		stage('Pull') {
 			steps {
-				git(url: 'http://192.168.70.200/ekb-2/ekb-server-mkesb.git', branch: 'master', credentialsId: 'jenkins')
+				git(url: 'http://192.168.70.200/ekb-2/ekb-server-mkesb.git', branch: 'master-v2.1.0', credentialsId: 'jenkins')
 
-				checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
+				checkout([$class: 'GitSCM', branches: [[name: '*/master-v2.1.0']],
 					extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'bio4j-distribution']],
 					userRemoteConfigs: [[credentialsId: 'jenkins', url: 'http://192.168.70.200/bio4j-ng/bio4j-distribution.git']]])
 
