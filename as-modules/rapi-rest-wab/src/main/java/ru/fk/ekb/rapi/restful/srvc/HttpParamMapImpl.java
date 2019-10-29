@@ -35,6 +35,11 @@ public class HttpParamMapImpl implements HttpParamMap {
     }
 
     @Override
+    public String deviceuuid() {
+        return null;
+    }
+
+    @Override
     public String pageSizeHeader() {
         return null;
     }
@@ -46,6 +51,11 @@ public class HttpParamMapImpl implements HttpParamMap {
 
     @Override
     public String offsetHeader() {
+        return null;
+    }
+
+    @Override
+    public String deviceuuidHeader() {
         return null;
     }
 
