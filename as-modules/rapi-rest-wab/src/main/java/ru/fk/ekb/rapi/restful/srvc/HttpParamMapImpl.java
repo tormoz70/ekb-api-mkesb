@@ -25,53 +25,9 @@ public class HttpParamMapImpl implements HttpParamMap {
     }
 
     @Override
-    public String offset() {
-        return null;
-    }
-
-    @Override
-    public String securityToken() {
-        return null;
-    }
-
-    @Override
-    public String deviceuuid() {
-        return null;
-    }
-
-    @Override
-    public String pageSizeHeader() {
-        return null;
-    }
-
-    @Override
-    public String pageHeader() {
-        return null;
-    }
-
-    @Override
-    public String offsetHeader() {
-        return null;
-    }
-
-    @Override
-    public String deviceuuidHeader() {
-        return null;
-    }
-
-    @Override
     public String securityTokenHeader() {
         return "X-SToken";
     }
 
-    @Override
-    public String clientHeader() {
-        return null;
-    }
-
-    @Override
-    public String clientVerHeader() {
-        return null;
-    }
 
 }
