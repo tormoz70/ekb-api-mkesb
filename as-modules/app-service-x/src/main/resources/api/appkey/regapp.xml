@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cursor xmlns="http://bio4j.ru/biodef-repo/store"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://bio4j.ru/biodef-repo/store http://bio4j.ru/biodef-repo/store/store-v11.xsd"
+        multiselection="true">
+    <SQL action="execute">
+        <text>${appkey_api.current.vesion}.create_appkey</text>
+        <param type="string" name="p_sys_curusr_uid"/>
+        <param type="string" name="p_sys_curusr_ip"/>
+        <param type="string" name="p_appdesc"/>
+        <param type="string" name="v_appkey" direction="OUT"/>
+    </SQL>
+    <fields/>
+</cursor>
