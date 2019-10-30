@@ -21,9 +21,11 @@ select * from table(${ktpub_api.current.vesion}.getComps('1', :p_released, :p_su
         <field type="string" name="pus"/>
         <field type="integer" name="comps_count" attrName="total_companies"/>
         <field type="integer" name="films_count" attrName="total_movies"/>
-        <field type="string" name="govsupp_rev" sorter="govsupp_rev_sort" attrName="refundable_support"/>
-        <field type="string" name="govsupp_irr" sorter="govsupp_irr_sort" attrName="nonrefundable_support"/>
-        <field type="string" name="summ" sorter="summ_sort" attrName="box_office"/>
-        <field type="string" name="tckts" sorter="tckts_sort" attrName="audience"/>
+        <field type="string" name="govsupp_rev" attrName="refundable_support"/>
+        <field type="string" name="govsupp_irr" attrName="nonrefundable_support"/>
+        <field type="string" name="unobl_debt" attrName="unfulfilledObligationsDebt"/>
+        <field type="string" name="unobl_cost" attrName="unfulfilledObligationsCost"/>
+        <field type="string" name="summ" attrName="box_office"/>
+        <field type="string" name="tckts" attrName="audience"/>
     </fields>
 </cursor>

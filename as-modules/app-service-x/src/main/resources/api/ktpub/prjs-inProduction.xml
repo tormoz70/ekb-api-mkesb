@@ -27,6 +27,8 @@ select * from table(${ktpub_api.current.vesion}.getPrjsInprod('0', :p_subn, :p_s
         <field type="string" name="govsupp_pct" sorter="govsupp_pct_sort" attrName="percent_support"/>
         <field type="decimal" name="govsupp_sort" attrName="total_support"/>
         <field type="string" name="budget" sorter="budget_sort" attrName="budget"/>
+        <field type="string" name="unobl_debt" sorter="unobl_debt_sort" attrName="unfulfilledObligationsDebt"/>
+        <field type="string" name="unobl_cost" sorter="unobl_cost_sort" attrName="unfulfilledObligationsCost"/>
         <field type="string" name="summ" sorter="summ_sort" attrName="box_office"/>
         <field type="string" name="tckts" sorter="tckts_sort" attrName="audience"/>
     </fields>

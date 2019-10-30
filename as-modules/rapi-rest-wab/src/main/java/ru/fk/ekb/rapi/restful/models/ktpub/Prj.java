@@ -31,6 +31,8 @@ public class Prj {
     public String nonrefundable_support;
     public String percent_support;
     public String budget;
+    public String unfulfilledObligationsDebt;
+    public String unfulfilledObligationsCost;
     public String box_office;
     public String audience;
 

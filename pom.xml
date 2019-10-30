@@ -57,7 +57,8 @@
             <properties>
                 <log4j.bio4j.level>DEBUG</log4j.bio4j.level>
                 <log4j.app.level>DEBUG</log4j.app.level>
-                <sso-servive-url>http://localhost:8089</sso-servive-url>
+<!--                <sso-servive-url>http://localhost:8089</sso-servive-url>-->
+                <sso-servive-url>http://192.168.70.51:8089</sso-servive-url>
             </properties>
         </profile>
         <profile>

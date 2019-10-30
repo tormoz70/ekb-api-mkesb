@@ -24,6 +24,8 @@ public class Comp {
     public Long total_movies;
     public String refundable_support;
     public String nonrefundable_support;
+    public String unfulfilledObligationsDebt;
+    public String unfulfilledObligationsCost;
     public String box_office;
     public String audience;
 

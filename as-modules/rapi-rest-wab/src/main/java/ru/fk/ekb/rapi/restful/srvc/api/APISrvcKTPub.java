@@ -140,6 +140,8 @@ public class APISrvcKTPub {
         dataResult.total_refundable_support = totals.refundable_support;
         dataResult.total_nonrefundable_support = totals.nonrefundable_support;
         dataResult.total_budget = totals.budget;
+        dataResult.total_unfulfilledObligationsDebt = totals.unfulfilledObligationsDebt;
+        dataResult.total_unfulfilledObligationsCost = totals.unfulfilledObligationsCost;
         dataResult.total_box_office = totals.box_office;
         dataResult.total_audience = totals.audience;
 
@@ -243,6 +245,8 @@ public class APISrvcKTPub {
         dataResult.total_companies = totals.total_companies;
         dataResult.total_refundable_support = totals.refundable_support;
         dataResult.total_nonrefundable_support = totals.nonrefundable_support;
+        dataResult.total_unfulfilledObligationsDebt = totals.unfulfilledObligationsDebt;
+        dataResult.total_unfulfilledObligationsCost = totals.unfulfilledObligationsCost;
         dataResult.total_box_office = totals.box_office;
         dataResult.total_audience = totals.audience;
 
