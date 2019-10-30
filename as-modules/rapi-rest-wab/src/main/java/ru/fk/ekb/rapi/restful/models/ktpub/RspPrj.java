@@ -13,4 +13,5 @@ public class RspPrj {
     public String total_unfulfilledObligationsCost;
     public String total_box_office;
     public String total_audience;
+    public String unfulfilledObligationsRelevance;
 }

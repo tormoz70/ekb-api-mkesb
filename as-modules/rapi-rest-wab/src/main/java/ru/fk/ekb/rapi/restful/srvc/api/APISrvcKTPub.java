@@ -144,6 +144,7 @@ public class APISrvcKTPub {
         dataResult.total_unfulfilledObligationsCost = totals.unfulfilledObligationsCost;
         dataResult.total_box_office = totals.box_office;
         dataResult.total_audience = totals.audience;
+        dataResult.unfulfilledObligationsRelevance = "Данные по состоянию на 31.10.2019";
 
         return dataResult;
     }
