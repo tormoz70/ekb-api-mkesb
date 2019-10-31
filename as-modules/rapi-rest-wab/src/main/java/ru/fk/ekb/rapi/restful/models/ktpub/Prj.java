@@ -33,6 +33,7 @@ public class Prj {
     public String budget;
     public String unfulfilledObligationsDebt;
     public String unfulfilledObligationsCost;
+    public String unfulfilledObligationsDesc;
     public String box_office;
     public String audience;
 
