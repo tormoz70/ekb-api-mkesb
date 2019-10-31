@@ -2,6 +2,7 @@ package ru.fk.ekb.rapi.restful.srvc.api;
 
 import ru.bio4j.ng.commons.types.Paramus;
 import ru.bio4j.ng.commons.utils.Strings;
+import ru.bio4j.ng.model.transport.ABean;
 import ru.bio4j.ng.model.transport.Param;
 import ru.bio4j.ng.model.transport.jstore.Sort;
 import ru.bio4j.ng.service.types.RestHelper;
@@ -144,7 +145,10 @@ public class APISrvcKTPub {
         dataResult.total_unfulfilledObligationsCost = totals.unfulfilledObligationsCost;
         dataResult.total_box_office = totals.box_office;
         dataResult.total_audience = totals.audience;
-        dataResult.unfulfilledObligationsRelevance = "Данные по состоянию на 31.10.2019";
+        dataResult.unfulfilledObligationsRelevance = RestHelper.getInstance().getScalar(
+                "api.ktpub.get-gparam",
+                Paramus.createParams("paramname", "unfulfilled-obligations-relevance"),
+                String.class, null);
 
         return dataResult;
     }
@@ -169,6 +173,10 @@ public class APISrvcKTPub {
             }
 
         }
+        rslt.unfulfilledObligationsRelevance = RestHelper.getInstance().getScalar(
+                "api.ktpub.get-gparam",
+                Paramus.createParams("paramname", "unfulfilled-obligations-relevance"),
+                String.class, null);
         return rslt;
     }
 
