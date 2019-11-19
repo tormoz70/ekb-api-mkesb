@@ -23,6 +23,7 @@ import java.util.List;
 @Path("/ktpub-api")
 public class APISrvcKTPub {
 
+    private static final String CS_EAIS_RES_FTP = "http://resources.fond-kino.ru/eais/images/big";
 
     private static void _decodeSort(HttpServletRequest request, Sort.NullsPosition nullsPosition) throws Exception {
         String sortTypeParam = RestHelper.getInstance().getBioParamFromRequest("sortType", request, String.class);
@@ -66,7 +67,7 @@ public class APISrvcKTPub {
             fsrc.id = 0;
             fsrc.name = "Министерство культуры";
             fsrc.short_name = "МК";
-            fsrc.image = String.format("http://resources.fond-kino.ru/eais/images/big/financing_source_%02d.png", fsrc.id);
+            fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
             prj.financing_source.add(fsrc);
         }
         if (prj.subnFK) {
@@ -74,7 +75,7 @@ public class APISrvcKTPub {
             fsrc.id = 1;
             fsrc.name = "Фонд кино";
             fsrc.short_name = "ФК";
-            fsrc.image = String.format("http://resources.fond-kino.ru/eais/images/big/financing_source_%02d.png", fsrc.id);
+            fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
             prj.financing_source.add(fsrc);
         }
     }
@@ -190,7 +191,6 @@ public class APISrvcKTPub {
         return _getProjects("api.ktpub.prjs-released", request);
     }
 
-
     @GET
     @Path("/rating/companies")
     @Produces(MediaType.APPLICATION_JSON)
@@ -233,7 +233,7 @@ public class APISrvcKTPub {
                     fsrc.id = 0;
                     fsrc.name = "Министерство культуры";
                     fsrc.short_name = "МК";
-                    fsrc.image = String.format("http://resources.fond-kino.ru/eais/images/big/financing_source_%02d.png", fsrc.id);
+                    fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
                     pc.financing_source.add(fsrc);
                 }
                 if(subnFK){
@@ -241,7 +241,7 @@ public class APISrvcKTPub {
                     fsrc.id = 1;
                     fsrc.name = "Фонд кино";
                     fsrc.short_name = "ФК";
-                    fsrc.image = String.format("http://resources.fond-kino.ru/eais/images/big/financing_source_%02d.png", fsrc.id);
+                    fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
                     pc.financing_source.add(fsrc);
                 }
                 comp.movies.add(pc);
