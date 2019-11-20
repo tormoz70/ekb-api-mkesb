@@ -3,6 +3,7 @@ package ru.fk.ekb.rapi.restful.srvc.api;
 import ru.bio4j.ng.commons.types.Paramus;
 import ru.bio4j.ng.commons.utils.Strings;
 import ru.bio4j.ng.model.transport.ABean;
+import ru.bio4j.ng.model.transport.FilterAndSorter;
 import ru.bio4j.ng.model.transport.Param;
 import ru.bio4j.ng.model.transport.jstore.Sort;
 import ru.bio4j.ng.service.types.RestHelper;
@@ -16,14 +17,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import ru.bio4j.ng.commons.utils.Jsons;
 
 @Path("/ktpub-api")
 public class APISrvcKTPub {
 
-    private static final String CS_EAIS_RES_FTP = "http://resources.fond-kino.ru/eais/images/big";
+    private static final String CS_EAIS_RES_FTP = "http://resources.fond-kino.ru/eais/images";
 
     private static void _decodeSort(HttpServletRequest request, Sort.NullsPosition nullsPosition) throws Exception {
         String sortTypeParam = RestHelper.getInstance().getBioParamFromRequest("sortType", request, String.class);
@@ -67,7 +70,7 @@ public class APISrvcKTPub {
             fsrc.id = 0;
             fsrc.name = "Министерство культуры";
             fsrc.short_name = "МК";
-            fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+            fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
             prj.financing_source.add(fsrc);
         }
         if (prj.subnFK) {
@@ -75,7 +78,7 @@ public class APISrvcKTPub {
             fsrc.id = 1;
             fsrc.name = "Фонд кино";
             fsrc.short_name = "ФК";
-            fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+            fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
             prj.financing_source.add(fsrc);
         }
     }
@@ -104,17 +107,29 @@ public class APISrvcKTPub {
             RestHelper.getInstance().setBioParamToRequest("p_released", null, request);
     }
 
-    public RspPrj _getProjects(final String bioCode, final HttpServletRequest request) throws Exception {
+    private static void _prepareAwards(Map<String, List<Fest>> festsMap, Prj prj) {
+        if (festsMap.containsKey(prj.id)) {
+            prj.festivals = festsMap.get(prj.id);
+            for (Fest f : prj.festivals) {
+                String iconStatus = (f.awards.size() > 0) ? "active" : "inactive";
+                f.icon = String.format("%s/guspp/%s/%s", CS_EAIS_RES_FTP, iconStatus, f.iconName);
+            }
+        }
+    }
+
+    public RspPrj _getProjects(final String bioCodePrjs, final String bioCodeAwards, final HttpServletRequest request) throws Exception {
         WrappedRequest req = ((WrappedRequest) request);
         boolean forceAll = Strings.isNullOrEmpty(req.getBioQueryParams().pageSizeOrig);
         _decodeSort(request, Sort.NullsPosition.DEFAULT);
         _decodeSupportId(request);
 
+        Map<String, List<Fest>> festsMap = _loadFests(bioCodeAwards, request);
+
         List<Prj> aBeanPage;
         if (forceAll)
-            aBeanPage = RestHelper.getInstance().getListAll(bioCode, request, Prj.class);
+            aBeanPage = RestHelper.getInstance().getListAll(bioCodePrjs, request, Prj.class);
         else
-            aBeanPage = RestHelper.getInstance().getList(bioCode, request, Prj.class);
+            aBeanPage = RestHelper.getInstance().getList(bioCodePrjs, request, Prj.class);
 
         RspPrj dataResult = new RspPrj();
         dataResult.movies = aBeanPage;
@@ -130,13 +145,14 @@ public class APISrvcKTPub {
                     prj.companies.add(pc);
                 }
                 _decodeFinancingSource(prj);
+                _prepareAwards(festsMap, prj);
             } catch (Exception e) {
                 throw new Exception(String.format("Error on processing prg: %s(%s)", prj.id, prj.name), e);
             }
 
         }
 
-        Prj totals = RestHelper.getInstance().getFirst(bioCode+"-ttl", request, Prj.class);
+        Prj totals = RestHelper.getInstance().getFirst(bioCodePrjs+"-ttl", request, Prj.class);
         dataResult.total_movies = totals.total_movies;
         dataResult.total_companies = totals.total_companies;
         dataResult.total_refundable_support = totals.refundable_support;
@@ -154,9 +170,53 @@ public class APISrvcKTPub {
         return dataResult;
     }
 
+    private static Fest findFest(List<Fest> prjFests, String festUid) {
+        Fest rslt =  prjFests.stream().filter(f -> f.uid.equalsIgnoreCase(festUid)).findFirst().orElse(null);
+        if(rslt == null) {
+            rslt = new Fest();
+            prjFests.add(rslt);
+            rslt.awards = new ArrayList<>();
+            rslt.nominations = new ArrayList<>();
+            rslt.uid = festUid;
+        }
+        return rslt;
+    }
+
+    private static Award findAward(List<Award> awards, long awardId) {
+        Award rslt =  awards.stream().filter(f -> f.id == awardId).findFirst().orElse(null);
+        if(rslt == null) {
+            rslt = new Award();
+            rslt.id = awardId;
+            awards.add(rslt);
+        }
+        return rslt;
+    }
+
+    public Map<String, List<Fest>> _loadFests(final String bioCode, final HttpServletRequest request) throws Exception {
+        Map<String, List<Fest>> rslt = new HashMap<>();
+        List<AwardRec> aBeans = RestHelper.getInstance().getListAll(bioCode, request, AwardRec.class);
+        for (AwardRec awardRec : aBeans) {
+            List<Fest> prjFests;
+            if(rslt.containsKey(awardRec.pcode))
+                prjFests = rslt.get(awardRec.pcode);
+            else {
+                prjFests = new ArrayList<>();
+                rslt.put(awardRec.pcode, prjFests);
+            }
+            Fest curfest = findFest(prjFests, awardRec.fest_uid);
+            curfest.name = awardRec.fest_name;
+            curfest.iconName = awardRec.icon;
+            Award curaward = awardRec.isnomination ? findAward(curfest.nominations, awardRec.faward_id) : findAward(curfest.awards, awardRec.faward_id);
+            curaward.name = awardRec.award_aname;
+            curaward.awardee = awardRec.awardee;
+        }
+        return rslt;
+    }
+
     public RspPrj getMovie(String puNumber, HttpServletRequest request) throws Exception {
         RestHelper.getInstance().setBioParamToRequest("puNumber", puNumber, request);
         RspPrj rslt = new RspPrj();
+        Map<String, List<Fest>> festsMap = _loadFests("api.ktpub.awards-released", request);
         rslt.movies = RestHelper.getInstance().getListAll("api.ktpub.prj-released", request, Prj.class);
         for (Prj prj : rslt.movies) {
             try {
@@ -167,6 +227,7 @@ public class APISrvcKTPub {
                     pc.id = compItem.substring(1, compItem.indexOf("]"));
                     pc.name = compItem.substring(compItem.indexOf("]") + 2);
                     prj.companies.add(pc);
+                    _prepareAwards(festsMap, prj);
                 }
                 _decodeFinancingSource(prj);
             } catch (Exception e) {
@@ -188,7 +249,7 @@ public class APISrvcKTPub {
         String puNum = RestHelper.getInstance().getBioParamFromRequest("puNumber", request, String.class);
         if(!Strings.isNullOrEmpty(puNum))
             return getMovie(puNum, request);
-        return _getProjects("api.ktpub.prjs-released", request);
+        return _getProjects("api.ktpub.prjs-released", "api.ktpub.awards-released", request);
     }
 
     @GET
@@ -233,7 +294,7 @@ public class APISrvcKTPub {
                     fsrc.id = 0;
                     fsrc.name = "Министерство культуры";
                     fsrc.short_name = "МК";
-                    fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+                    fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
                     pc.financing_source.add(fsrc);
                 }
                 if(subnFK){
@@ -241,7 +302,7 @@ public class APISrvcKTPub {
                     fsrc.id = 1;
                     fsrc.name = "Фонд кино";
                     fsrc.short_name = "ФК";
-                    fsrc.image = String.format("%s/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+                    fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
                     pc.financing_source.add(fsrc);
                 }
                 comp.movies.add(pc);
@@ -266,14 +327,14 @@ public class APISrvcKTPub {
     @Path("/projects/inProduction")
     @Produces(MediaType.APPLICATION_JSON)
     public RspPrj getProjectsInProduction(@Context HttpServletRequest request) throws Exception {
-        return _getProjects("api.ktpub.prjs-inProduction", request);
+        return _getProjects("api.ktpub.prjs-inProduction", "api.ktpub.awards-inProduction", request);
     }
 
     @GET
     @Path("/projects/unfulfilledObligations")
     @Produces(MediaType.APPLICATION_JSON)
     public RspPrj getProjectsUnfulfilledObligations(@Context HttpServletRequest request) throws Exception {
-        return _getProjects("api.ktpub.prjs-unoblig", request);
+        return _getProjects("api.ktpub.prjs-unoblig", "api.ktpub.awards-unoblig", request);
     }
 
     @GET

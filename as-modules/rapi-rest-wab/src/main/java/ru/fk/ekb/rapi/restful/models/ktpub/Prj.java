@@ -39,4 +39,5 @@ public class Prj {
 
     public List<FSrc> financing_source;
     public List<PrjComp> companies;
+    public List<Fest> festivals;
 }
