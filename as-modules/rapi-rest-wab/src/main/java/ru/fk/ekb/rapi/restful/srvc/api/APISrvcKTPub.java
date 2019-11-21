@@ -16,10 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //import ru.bio4j.ng.commons.utils.Jsons;
 
@@ -64,13 +61,14 @@ public class APISrvcKTPub {
     }
 
     private static void _decodeFinancingSource(Prj prj) throws Exception {
+        Date ctime = new Date();
         prj.financing_source = new ArrayList<>();
         if (prj.subnMK) {
             FSrc fsrc = new FSrc();
             fsrc.id = 0;
             fsrc.name = "Министерство культуры";
             fsrc.short_name = "МК";
-            fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+            fsrc.image = String.format("%s/big/financing_source_%02d.png?_dc=%d", CS_EAIS_RES_FTP, fsrc.id, ctime.getTime());
             prj.financing_source.add(fsrc);
         }
         if (prj.subnFK) {
@@ -78,7 +76,7 @@ public class APISrvcKTPub {
             fsrc.id = 1;
             fsrc.name = "Фонд кино";
             fsrc.short_name = "ФК";
-            fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+            fsrc.image = String.format("%s/big/financing_source_%02d.png?_dc=%d", CS_EAIS_RES_FTP, fsrc.id, ctime.getTime());
             prj.financing_source.add(fsrc);
         }
     }
@@ -112,7 +110,8 @@ public class APISrvcKTPub {
             prj.festivals = festsMap.get(prj.id);
             for (Fest f : prj.festivals) {
                 String iconStatus = (f.awards.size() > 0) ? "active" : "inactive";
-                f.icon = String.format("%s/guspp/%s/%s", CS_EAIS_RES_FTP, iconStatus, f.iconName);
+                Date ctime = new Date();
+                f.icon = String.format("%s/guspp/%s/%s?_dc=%d", CS_EAIS_RES_FTP, iconStatus, f.iconName, ctime.getTime());
             }
         }
     }
