@@ -68,7 +68,8 @@ public class APISrvcKTPub {
             fsrc.id = 0;
             fsrc.name = "Министерство культуры";
             fsrc.short_name = "МК";
-            fsrc.image = String.format("%s/big/financing_source_%02d.png?_dc=%d", CS_EAIS_RES_FTP, fsrc.id, ctime.getTime());
+            fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+//            fsrc.image = String.format("%s/big/financing_source_%02d.png?_dc=%d", CS_EAIS_RES_FTP, fsrc.id, ctime.getTime());
             prj.financing_source.add(fsrc);
         }
         if (prj.subnFK) {
@@ -76,7 +77,8 @@ public class APISrvcKTPub {
             fsrc.id = 1;
             fsrc.name = "Фонд кино";
             fsrc.short_name = "ФК";
-            fsrc.image = String.format("%s/big/financing_source_%02d.png?_dc=%d", CS_EAIS_RES_FTP, fsrc.id, ctime.getTime());
+            fsrc.image = String.format("%s/big/financing_source_%02d.png", CS_EAIS_RES_FTP, fsrc.id);
+//            fsrc.image = String.format("%s/big/financing_source_%02d.png?_dc=%d", CS_EAIS_RES_FTP, fsrc.id, ctime.getTime());
             prj.financing_source.add(fsrc);
         }
     }
@@ -111,7 +113,8 @@ public class APISrvcKTPub {
             for (Fest f : prj.festivals) {
                 String iconStatus = (f.awards.size() > 0) ? "active" : "inactive";
                 Date ctime = new Date();
-                f.icon = String.format("%s/guspp/%s/%s?_dc=%d", CS_EAIS_RES_FTP, iconStatus, f.iconName, ctime.getTime());
+                f.icon = String.format("%s/guspp/%s/%s", CS_EAIS_RES_FTP, iconStatus, f.iconName);
+//                f.icon = String.format("%s/guspp/%s/%s?_dc=%d", CS_EAIS_RES_FTP, iconStatus, f.iconName, ctime.getTime());
             }
         }
     }
