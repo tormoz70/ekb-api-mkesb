@@ -3,6 +3,7 @@ package ru.fk.ekb.rapi.restful.srvc.api;
 import ru.bio4j.ng.commons.types.Paramus;
 import ru.bio4j.ng.commons.utils.Strings;
 import ru.bio4j.ng.model.transport.ABean;
+import ru.bio4j.ng.model.transport.BioError;
 import ru.bio4j.ng.model.transport.FilterAndSorter;
 import ru.bio4j.ng.model.transport.Param;
 import ru.bio4j.ng.model.transport.jstore.Sort;
@@ -25,7 +26,7 @@ public class APISrvcKTPub {
 
     private static final String CS_EAIS_RES_FTP = "http://resources.fond-kino.ru/eais/images";
 
-    private static void _decodeSort(HttpServletRequest request, Sort.NullsPosition nullsPosition) throws Exception {
+    private static void _decodeSort(HttpServletRequest request, Sort.NullsPosition nullsPosition) {
         String sortTypeParam = RestHelper.getInstance().getBioParamFromRequest("sortType", request, String.class);
         String sortParam = RestHelper.getInstance().getBioParamFromRequest("sort", request, String.class);
         if(!Strings.isNullOrEmpty(sortTypeParam) && !Strings.isNullOrEmpty(sortParam)) {
@@ -40,7 +41,7 @@ public class APISrvcKTPub {
         }
     }
 
-    private static void _replaceBioParam(HttpServletRequest request, String newParamName, String oldParamName, Object newParamValue) throws Exception {
+    private static void _replaceBioParam(HttpServletRequest request, String newParamName, String oldParamName, Object newParamValue) {
         List<Param> prms = ((WrappedRequest)request).getBioQueryParams().bioParams;
         if(prms == null){
             prms = new ArrayList<>();
@@ -83,7 +84,7 @@ public class APISrvcKTPub {
         }
     }
 
-    private static void _decodeSupportId(final HttpServletRequest request) throws Exception {
+    private static void _decodeSupportId(final HttpServletRequest request) {
         Integer supportId = RestHelper.getInstance().getBioParamFromRequest("support_id", request, Integer.class);
         if (supportId == null)
             RestHelper.getInstance().setBioParamToRequest("p_subn", null, request);
@@ -119,7 +120,42 @@ public class APISrvcKTPub {
         }
     }
 
-    public RspPrj _getProjects(final String bioCodePrjs, final String bioCodeAwards, final HttpServletRequest request) throws Exception {
+    private String _findCmpAttr(String[] cmpAttrs, String cmpId) {
+        String id; String attr;
+        for (String item : cmpAttrs) {
+            id = item.substring(1, item.indexOf("]"));
+            attr = item.substring(item.indexOf("]") + 2);
+            if(id.equalsIgnoreCase(cmpId))
+                return Strings.isNullOrEmpty(attr) ? null : attr;
+        }
+        return null;
+    }
+
+    private void _preparePrj(final Prj prj, final Map<String, List<Fest>> festsMap) {
+        try {
+            prj.companies = new ArrayList<>();
+            String[] compList = Strings.split(prj.compList, "|-|");
+            String[] producerList = Strings.split(prj.producerList, "|-|");
+            String[] guarantorList = Strings.split(prj.guarantorList, "|-|");
+            String[] directorList = Strings.split(prj.directorList, "|-|");
+            for (String compItem : compList) {
+                PrjComp pc = new PrjComp();
+                pc.id = compItem.substring(1, compItem.indexOf("]"));
+                pc.name = compItem.substring(compItem.indexOf("]") + 2);
+                pc.producer = _findCmpAttr(producerList, pc.id);
+                pc.guarantor = _findCmpAttr(guarantorList, pc.id);
+                pc.director = _findCmpAttr(directorList, pc.id);
+                prj.companies.add(pc);
+            }
+            _decodeFinancingSource(prj);
+            _prepareAwards(festsMap, prj);
+        } catch (Exception e) {
+            throw new BioError(String.format("Error on processing prg: %s(%s)", prj.id, prj.name), e);
+        }
+
+    }
+
+    public RspPrj _getProjects(final String bioCodePrjs, final String bioCodeAwards, final HttpServletRequest request) throws BioError {
         WrappedRequest req = ((WrappedRequest) request);
         boolean forceAll = Strings.isNullOrEmpty(req.getBioQueryParams().pageSizeOrig);
         _decodeSort(request, Sort.NullsPosition.DEFAULT);
@@ -137,21 +173,7 @@ public class APISrvcKTPub {
         dataResult.movies = aBeanPage;
 
         for (Prj prj : dataResult.movies) {
-            try {
-                prj.companies = new ArrayList<>();
-                String[] compList = Strings.split(prj.compList, "|-|");
-                for (String compItem : compList) {
-                    PrjComp pc = new PrjComp();
-                    pc.id = compItem.substring(1, compItem.indexOf("]"));
-                    pc.name = compItem.substring(compItem.indexOf("]") + 2);
-                    prj.companies.add(pc);
-                }
-                _decodeFinancingSource(prj);
-                _prepareAwards(festsMap, prj);
-            } catch (Exception e) {
-                throw new Exception(String.format("Error on processing prg: %s(%s)", prj.id, prj.name), e);
-            }
-
+            _preparePrj(prj, festsMap);
         }
 
         Prj totals = RestHelper.getInstance().getFirst(bioCodePrjs+"-ttl", request, Prj.class);
@@ -194,7 +216,7 @@ public class APISrvcKTPub {
         return rslt;
     }
 
-    public Map<String, List<Fest>> _loadFests(final String bioCode, final HttpServletRequest request) throws Exception {
+    public Map<String, List<Fest>> _loadFests(final String bioCode, final HttpServletRequest request) {
         Map<String, List<Fest>> rslt = new HashMap<>();
         List<AwardRec> aBeans = RestHelper.getInstance().getListAll(bioCode, request, AwardRec.class);
         for (AwardRec awardRec : aBeans) {
@@ -221,21 +243,7 @@ public class APISrvcKTPub {
         Map<String, List<Fest>> festsMap = _loadFests("api.ktpub.awards-released", request);
         rslt.movies = RestHelper.getInstance().getListAll("api.ktpub.prj-released", request, Prj.class);
         for (Prj prj : rslt.movies) {
-            try {
-                prj.companies = new ArrayList<>();
-                String[] compList = Strings.split(prj.compList, "|-|");
-                for (String compItem : compList) {
-                    PrjComp pc = new PrjComp();
-                    pc.id = compItem.substring(1, compItem.indexOf("]"));
-                    pc.name = compItem.substring(compItem.indexOf("]") + 2);
-                    prj.companies.add(pc);
-                    _prepareAwards(festsMap, prj);
-                }
-                _decodeFinancingSource(prj);
-            } catch (Exception e) {
-                throw new Exception(String.format("Error on processing prg: %s(%s)", prj.id, prj.name), e);
-            }
-
+            _preparePrj(prj, festsMap);
         }
         rslt.unfulfilledObligationsRelevance = RestHelper.getInstance().getScalar(
                 "api.ktpub.get-gparam",

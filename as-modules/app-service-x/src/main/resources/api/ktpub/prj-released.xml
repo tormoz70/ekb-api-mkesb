@@ -19,7 +19,13 @@ select * from table(${ktpub_api.current.vesion}.getPrjReleased(:p_puNumber))
         <field type="integer" name="prjs_count" attrName="total_movies"/>
         <field type="integer" name="comps_count" attrName="total_companies"/>
         <field type="string" name="studias" attrName="compList"/>
-        <field type="string" name="companies_sort" attrName="company"/>
+        <field type="string" name="studias_sort" attrName="company"/>
+        <field type="string" name="producers" attrName="producerList"/>
+        <field type="string" name="producers_sort" attrName="producer"/>
+        <field type="string" name="guarantors" attrName="guarantorList"/>
+        <field type="string" name="guarantors_sort" attrName="guarantor"/>
+        <field type="string" name="directors" attrName="directorList"/>
+        <field type="string" name="directors_sort" attrName="director"/>
         <field type="string" name="startdate" attrName="release_date" sorter="startdate_sort"/>
         <field type="string" name="govsupp_rev" sorter="govsupp_rev_sort" attrName="refundable_support"/>
         <field type="string" name="govsupp_irr" sorter="govsupp_irr_sort" attrName="nonrefundable_support"/>

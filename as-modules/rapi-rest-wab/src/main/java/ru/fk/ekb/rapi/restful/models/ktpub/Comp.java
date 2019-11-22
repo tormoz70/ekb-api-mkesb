@@ -21,6 +21,9 @@ public class Comp {
     public String id;
     public Long index_number;
     public String name;
+    public String producer;
+    public String guarantor;
+    public String director;
     public Long total_movies;
     public String refundable_support;
     public String nonrefundable_support;

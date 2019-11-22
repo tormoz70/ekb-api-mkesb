@@ -19,6 +19,12 @@ public class Prj {
     @JsonIgnore
     public String compList;
     @JsonIgnore
+    public String producerList;
+    @JsonIgnore
+    public String guarantorList;
+    @JsonIgnore
+    public String directorList;
+    @JsonIgnore
     public Long total_movies;
 
     public Long total_companies;

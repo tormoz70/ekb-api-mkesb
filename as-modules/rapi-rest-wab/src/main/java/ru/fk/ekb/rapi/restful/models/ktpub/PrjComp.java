@@ -5,4 +5,7 @@ import java.util.List;
 public class PrjComp {
     public String id;
     public String name;
+    public String producer;
+    public String guarantor;
+    public String director;
 }
