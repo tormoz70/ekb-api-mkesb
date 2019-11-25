@@ -17,13 +17,16 @@ public class Comp {
     public String pus;
     @JsonIgnore
     public Long total_companies;
+    @JsonIgnore
+    public String producers;
+    @JsonIgnore
+    public String guarantors;
+    @JsonIgnore
+    public String directors;
 
     public String id;
     public Long index_number;
     public String name;
-    public String producer;
-    public String guarantor;
-    public String director;
     public Long total_movies;
     public String refundable_support;
     public String nonrefundable_support;

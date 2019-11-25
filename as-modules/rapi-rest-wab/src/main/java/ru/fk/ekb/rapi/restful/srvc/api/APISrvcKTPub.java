@@ -292,10 +292,16 @@ public class APISrvcKTPub {
             String[] filmnamesList = comp.filmnames.length() > 0 ? Strings.split(comp.filmnames.substring(0, comp.filmnames.length()-2), "|-|") : new String[0];
             String[] flagsList = comp.flags.length() > 0 ? Strings.split(comp.flags.substring(0, comp.flags.length()-2), "|-|") : new String[0];
             String[] pusList = comp.pus.length() > 0 ? Strings.split(comp.pus.substring(0, comp.pus.length()-2), "|-|") : new String[0];
+            String[] producersList = comp.producers.length() > 0 ? Strings.split(comp.producers.substring(0, comp.producers.length()-2), "|-|") : new String[0];
+            String[] guarantorsList = comp.guarantors.length() > 0 ? Strings.split(comp.guarantors.substring(0, comp.guarantors.length()-2), "|-|") : new String[0];
+            String[] directorsList = comp.directors.length() > 0 ? Strings.split(comp.directors.substring(0, comp.directors.length()-2), "|-|") : new String[0];
             for(int i=0; i<pcodesList.length; i++) {
                 CompPrj pc = new CompPrj();
                 pc.id = pcodesList[i];
                 pc.puNumber = (!Strings.isNullOrEmpty(pusList[i]) && !pusList[i].equals("*")) ? pusList[i] : null;
+                pc.producer = (!Strings.isNullOrEmpty(producersList[i]) && !producersList[i].equals("*")) ? producersList[i] : null;
+                pc.guarantor = (!Strings.isNullOrEmpty(guarantorsList[i]) && !guarantorsList[i].equals("*")) ? guarantorsList[i] : null;
+                pc.director = (!Strings.isNullOrEmpty(directorsList[i]) && !directorsList[i].equals("*")) ? directorsList[i] : null;
                 pc.name = filmnamesList[i];
                 pc.financing_source = new ArrayList<>();
                 boolean subnMK = flagsList[i].charAt(0) == '1';

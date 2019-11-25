@@ -11,4 +11,7 @@ public class CompPrj {
     public String puNumber;
     public String name;
     public List<FSrc> financing_source;
+    public String producer;
+    public String guarantor;
+    public String director;
 }
