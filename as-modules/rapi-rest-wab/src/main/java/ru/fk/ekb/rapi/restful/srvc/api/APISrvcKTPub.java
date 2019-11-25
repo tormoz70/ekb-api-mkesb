@@ -233,6 +233,7 @@ public class APISrvcKTPub {
             Award curaward = awardRec.isnomination ? findAward(curfest.nominations, awardRec.faward_id) : findAward(curfest.awards, awardRec.faward_id);
             curaward.name = awardRec.award_aname;
             curaward.awardee = awardRec.awardee;
+            curfest.year = awardRec.fyear;
         }
         return rslt;
     }

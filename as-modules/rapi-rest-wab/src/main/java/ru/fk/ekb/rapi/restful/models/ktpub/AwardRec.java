@@ -9,4 +9,5 @@ public class AwardRec {
     public boolean isnomination;
     public String award_aname;
     public String awardee;
+    public String fyear;
 }

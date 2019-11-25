@@ -13,6 +13,7 @@ public class Fest {
     @JsonIgnore
     public String iconName;
     public String icon;
+    public String year;
     public List<Award> awards;
     public List<Award> nominations;
 }

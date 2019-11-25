@@ -19,5 +19,6 @@ select * from table(${ktpub_api.current.vesion}.getAwardsReleased(:p_subn, :p_se
         <field type="boolean" name="isnomination"/>
         <field type="string" name="award_aname"/>
         <field type="string" name="awardee"/>
+        <field type="string" name="fyear"/>
     </fields>
 </cursor>
