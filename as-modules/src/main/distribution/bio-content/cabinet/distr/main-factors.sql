@@ -5,7 +5,7 @@ with ddd as (
            round(sum(a.sess)/count(distinct a.org_id)) as sess,
            count(distinct a.org_id) orgs,
            count(distinct a.sroom_id) srooms
-      from CUB4$SALES1 a
+      from CUB6$SALES1 a
       where a.part_month between to_char(mob_fmt.decodeDate(:p_periodStart), 'YYYYMM') and to_char(mob_fmt.decodeDate(:p_periodEnd), 'YYYYMM')
         and a.show_date >= trunc(mob_fmt.decodeDate(:p_periodStart)) and a.show_date < trunc(mob_fmt.decodeDate(:p_periodEnd))+1
         and (:p_holdingId is null or a.holding_id = to_number(:p_holdingId))
@@ -38,4 +38,4 @@ select
     a.orgs,
     a.srooms
 from ddd a
-    inner join cub4$kinos k on k.pu_num = a.pu_num
+    inner join CUB6$KINOS k on k.pu_num = a.pu_num
